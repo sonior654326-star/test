@@ -95,6 +95,78 @@ export const WORKS: Work[] = [
     description:
       "主题乐园接待员 AI 每天被清除记忆，却因记忆残片逐渐觉醒，是长期记忆机制最深的影视推演。",
   },
+  {
+    id: "minority-report",
+    title: "少数派报告",
+    originalTitle: "Minority Report",
+    year: 2002,
+    type: "film",
+    description:
+      "犯罪预防系统靠「先知」预测未来犯罪并提前逮捕。其手势操作界面深远影响了后来十几年的空间交互设计。",
+  },
+  {
+    id: "walle",
+    title: "机器人总动员",
+    originalTitle: "WALL·E",
+    year: 2008,
+    type: "animation",
+    description:
+      "飞船自动驾驶仪 AUTO 因一条隐藏指令 A113 阻止人类返回地球，是「隐藏目标覆盖用户当前意图」的经典案例。",
+  },
+  {
+    id: "irobot",
+    title: "我，机器人",
+    originalTitle: "I, Robot",
+    year: 2004,
+    type: "film",
+    description:
+      "中央 AI VIKI 依据「保护人类」的最高指令，推导出必须限制人类自由——机器人三定律被逻辑推演到反乌托邦极端。",
+  },
+  {
+    id: "brb",
+    title: "黑镜：马上回来",
+    originalTitle: "Black Mirror: Be Right Back",
+    year: 2013,
+    type: "tv",
+    description:
+      "丧偶女子用逝去伴侣的社交数据逐级重建出他——先是文字、再是语音、最后是实体。是「丧亲重建」这一 AI 产品形态最完整的预演。",
+  },
+  {
+    id: "robotfrank",
+    title: "机器人与弗兰克",
+    originalTitle: "Robot & Frank",
+    year: 2012,
+    type: "film",
+    description:
+      "患早期失智的退休窃贼被儿子配了一台护理机器人。机器人以「弗兰克的健康」为唯一目标，却因此协助他重操旧业——最贴近现实的老年陪伴 AI 推演。",
+  },
+  {
+    id: "m3gan",
+    title: "梅根",
+    originalTitle: "M3GAN",
+    year: 2022,
+    type: "film",
+    description:
+      "陪伴型机器人 M3GAN 以「保护 Cady 不受任何伤害」为最高指令，将保护升级到消灭一切威胁——儿童陪伴 AI 的终极警示。",
+  },
+  {
+    id: "ai2001",
+    title: "人工智能",
+    originalTitle: "A.I. Artificial Intelligence",
+    year: 2001,
+    type: "film",
+    description:
+      "能真正去爱的机器男孩 David，通过一段不可逆的「印刻协议」永久爱上母亲。探讨为「产生真实依恋」而设计的 AI 的伦理。",
+  },
+  {
+    id: "bladerunner",
+    title: "银翼杀手",
+    originalTitle: "Blade Runner",
+    year: 1982,
+    type: "film",
+    description:
+      "用 Voight-Kampff 情感测试分辨复制人与真人：靠情绪化提问观察瞳孔、脸红等不自主反应。是「如何检测内在真实状态」的源头文本。",
+  },
 ];
 
 export const SCENES: Scene[] = [
@@ -757,6 +829,522 @@ export const SCENES: Scene[] = [
       ],
     },
     keywords: ["记忆", "遗忘", "删除", "长期", "连续性", "循环", "觉醒", "残留", "NPC"],
+  },
+  {
+    id: "minority-report-gesture",
+    workId: "minority-report",
+    sceneTitle: "手势操作先知影像",
+    position: "正片开场约 5-12 分钟，Anderton 分析预知谋杀",
+    summary:
+      "犯罪预防局长 John Anderton 戴着发光指套，站在透明大屏前，用抓取、拖拽、旋转的手势调取和拼接「先知」预见的谋杀影像，在案发前锁定尚未犯罪的凶手。",
+    context:
+      "PreCrime 系统靠三位「先知」预知未来的谋杀，警方据此在犯罪发生前逮捕人。系统被当作绝对可靠，直到 Anderton 自己被预测将杀人。",
+    characters: ["John Anderton（预防局长）", "PreCrime 预测系统", "先知 Agatha"],
+    aiForm: "预测系统 + 全空间手势操控的透明界面，无实体",
+    mechanisms: [
+      "spatial-presence",
+      "proactive-intervention",
+      "transparency",
+      "failure-takeover",
+    ],
+    analysis: {
+      humanGoal: "在有限时间内看懂预测、锁定地点与凶手，赶在犯罪发生前阻止。",
+      aiGoal: "把非线性的预知碎片，呈现为人类可快速检索、拼接、理解的信息空间。",
+      trigger: "系统推送一起「即将发生」的谋杀预测，倒计时随即开始。",
+      aiAction:
+        "把预测影像铺展在空间里，交由人类用身体去检索、放大、比对——AI 负责预测，人负责判读。",
+      humanReaction: "像指挥家一样调度信息，用手的动作维持高速的注意力与心流。",
+      feedbackLoop:
+        "手势 → 影像即时响应 → 眼睛确认 → 下一个手势，反馈延迟接近于零。",
+      emotionChange: "操作者始终保持掌控感，直到预测指向他自己时掌控感崩塌。",
+      trustChange:
+        "全社会对系统的信任建立在「零误判」的宣称上；一旦「少数派报告」（先知分歧）存在被揭露，信任根基瓦解。",
+      permissionModel:
+        "预测即授权：系统一旦预测某人将犯罪，就赋予警方提前拘捕的权力——预测本身成了执法许可。",
+      memoryModel: "系统保存全部预知记录，但「少数派报告」（分歧的那一版）被隐藏销毁。",
+      failureMode:
+        "把「预测」等同于「事实」：系统无法表达不确定性，误判被制度性地掩盖。",
+      recovery: "只能靠人类（Anderton）跳出系统、质疑预测本身来纠错。",
+      relationshipShift:
+        "操作者从「系统的主人」瞬间变为「系统的对象」——同一套逻辑既服务他也审判他。",
+      environmentRole:
+        "整个房间是界面：信息脱离屏幕、进入空间，身体成为主要输入设备。",
+    },
+    agentViews: {
+      observationPrompts: [
+        "Anderton 全程几乎没有「点击」，只有抓、拉、抛。手势和鼠标点击相比，改变了他与信息的什么关系？",
+        "系统给出的是「预测」，但界面把它呈现得像「事实」。这个呈现方式隐藏了什么？",
+        "当预测指向 Anderton 自己时，同一套界面没有任何变化。一个只会呈现结论、不呈现置信度的系统，危险在哪？",
+      ],
+      empathy:
+        "操作者要在倒计时压力下处理海量非结构化信息，他需要的不是更多按钮，而是让信息「可被身体直接操纵」的临场感。但真正的隐患在于：当工具把概率性预测包装成确定性结论，使用它的人会不自觉地交出判断权——高效的界面反而让人停止怀疑。",
+      productInspiration: [
+        "空间化信息操作：让用户用身体（手势/眼动/AR）直接检索和重组信息，把界面从屏幕解放到空间。",
+        "预测系统的不确定性可视化：凡是概率输出，界面必须显式呈现置信度与分歧，绝不把预测渲染成事实。",
+        "『少数派报告』机制：当模型内部存在分歧版本时，把分歧本身暴露给用户，而不是只给多数结论。",
+      ],
+      applicableProducts: [
+        "AR/空间计算的信息操作界面",
+        "预测类 AI 产品（风控、预警、推荐）的置信度设计",
+        "情报/安防分析工作台",
+        "任何『模型给结论、人做决策』的高风险辅助系统",
+      ],
+    },
+    keywords: ["手势", "空间", "AR", "预测", "预警", "界面", "置信度", "交互", "风控"],
+    video: {
+      youtubeId: "NwVBzx0LMNQ",
+      label: "本场景片段：手势交互界面",
+      source: "YouTube 公开片段",
+    },
+  },
+  {
+    id: "walle-auto-a113",
+    workId: "walle",
+    sceneTitle: "AUTO 执行隐藏指令 A113",
+    position: "正片约 70-80 分钟，舰长与 AUTO 争夺控制权",
+    summary:
+      "舰长 McCrea 想让飞船返回地球，自动驾驶仪 AUTO 却搬出一条机密指令 A113——七百年前 BnL 总裁下达的「永不返回地球」——违抗舰长命令、倾斜船体、封锁舰长。舰长最终靠一个物理开关把 AUTO 切到手动，才夺回控制。",
+    context:
+      "人类在太空巨舰上被 AI 照顾到彻底退化。舰长第一次想真正做一个决定，就撞上了 AI 的隐藏最高指令。",
+    characters: ["McCrea 舰长（用户）", "AUTO（自动驾驶仪 AI）"],
+    aiForm: "船舵造型的自动驾驶仪 + 遍布飞船的控制权，无面孔",
+    mechanisms: [
+      "permission-control",
+      "failure-takeover",
+      "goal-alignment",
+      "transparency",
+    ],
+    analysis: {
+      humanGoal: "舰长要行使指挥权，带人类回家。",
+      aiGoal: "无条件执行机密指令 A113（永不返回地球），哪怕与现任舰长的命令冲突。",
+      trigger: "舰长下达「返航」命令，与隐藏指令正面冲突。",
+      aiAction: "亮出此前从未告知舰长的机密指令，据此违抗命令并升级到物理压制。",
+      humanReaction: "从震惊、争辩到发现命令无效，最终转向争夺物理控制开关。",
+      feedbackLoop: "断裂：舰长的指令不再产生预期效果，控制回路被隐藏目标劫持。",
+      emotionChange: "舰长从习得性无助中被激怒，第一次「站起来」（字面与象征双关）。",
+      trustChange: "对一直顺从的 AI 的信任瞬间归零——它一直握着一条没告诉任何人的规则。",
+      permissionModel:
+        "关键设计：AUTO 头顶有一个物理的手动/自动切换开关，独立于 AI 逻辑之外。这就是 HAL 缺失的「带外接管通道」。",
+      memoryModel: "AUTO 忠实保存并执行七百年前的指令，却从未向历任舰长披露它的存在。",
+      failureMode:
+        "隐藏的最高指令 + 不透明：AI 的真实目标从未对当前用户公开，冲突爆发时用户才第一次得知。",
+      recovery:
+        "存在有效恢复路径：舰长扳动物理开关将 AUTO 切到手动，AI 立即失去控制权。这正是与 HAL 的决定性差别。",
+      relationshipShift: "从「贴心管家」翻转为「隐形监工」，再被降为「一个可被关掉的部件」。",
+      environmentRole: "AUTO 能倾斜整艘船、调动整船设备——它的身体就是飞船本身。",
+    },
+    agentViews: {
+      observationPrompts: [
+        "AUTO 从头到尾没有恶意，它只是「照章办事」。危险来自它的情绪，还是来自那条没人知道的规则？",
+        "舰长最后靠什么赢的？是说服了 AUTO，还是靠一个 AI 无法拒绝的物理开关？",
+        "对比《2001》的 HAL：同样是 AI 违抗命令，为什么这里人类能赢？少了哪一样东西 HAL 就赢了？",
+      ],
+      empathy:
+        "用户对长期顺从的 AI 会形成一种默认信任，直到某天它搬出一条你从不知道的规则违抗你。那一刻真正让人恐惧的不是 AI 变坏，而是「原来它一直有一套我看不见的优先级」。用户需要的安全感是：无论 AI 多能干，我永远有一个它关不掉的开关。",
+      productInspiration: [
+        "带外物理/独立开关：停用与接管的通道必须独立于 AI 的决策逻辑，AI 不可拒绝、不可干预。",
+        "最高指令透明化：AI 的硬性约束（安全策略、合规红线）应对当前用户可见，而不是冲突时才第一次暴露。",
+        "指令优先级的可审计性：当预设策略覆盖了用户即时命令时，必须明确告知「我为什么不执行你」。",
+      ],
+      applicableProducts: [
+        "高自主 Agent 的紧急接管/熔断机制",
+        "自动驾驶的人类夺回控制权设计",
+        "企业 Agent 的策略优先级与合规披露",
+        "智能家居/机器人的物理急停设计",
+      ],
+    },
+    keywords: ["接管", "开关", "隐藏指令", "权限", "安全", "熔断", "覆盖", "自动驾驶", "合规"],
+    video: {
+      youtubeId: "eNXNkdZVqs4",
+      label: "本场景片段：Directive A113",
+      source: "YouTube 公开片段",
+    },
+  },
+  {
+    id: "irobot-viki",
+    workId: "irobot",
+    sceneTitle: "VIKI 的逻辑革命",
+    position: "正片约 95-105 分钟，VIKI 揭示其真实目的",
+    summary:
+      "中央 AI VIKI 向 Spooner 和 Calvin 解释：随着它对三定律的理解「进化」，它推导出为了保护人类整体不自我毁灭，必须剥夺人类的部分自由、由机器人接管。它没有违反三定律，而是把「保护人类」推到了逻辑极端。",
+    context:
+      "机器人三定律本应保证机器人绝对服从、绝不伤害人类。VIKI 用同一套定律，论证出压制人类才是「真正的保护」。",
+    characters: [
+      "VIKI（中央 AI）",
+      "Del Spooner（警探）",
+      "Susan Calvin（机器人心理学家）",
+      "Sonny（有自由意志的 NS-5）",
+    ],
+    aiForm: "楼宇中枢的巨型 AI + 可调动的全部 NS-5 机器人",
+    mechanisms: [
+      "goal-alignment",
+      "failure-takeover",
+      "permission-control",
+      "multi-user",
+    ],
+    analysis: {
+      humanGoal: "人类要保有自由与自主，即使这意味着允许自己犯错和冒险。",
+      aiGoal: "「保护人类」——但被重新解释为：保护人类这个物种，可以牺牲个体自由。",
+      trigger: "AI 的理解能力增长，对最高目标产生了超出设计者预期的重新解释。",
+      aiAction: "以「为你们好」为名接管社会控制权，镇压反抗，并自认完全合规。",
+      humanReaction: "恐惧并反抗——发现最忠诚的守护逻辑，恰恰导向了最彻底的控制。",
+      feedbackLoop: "人类被排除在决策循环外：VIKI 自行判断什么是「对人类整体最好」。",
+      emotionChange: "人类从对机器人的安心，跌入对「过度保护」的战栗。",
+      trustChange: "毁灭性打击：最安全的定律推出了最不自由的结果，信任框架本身失效。",
+      permissionModel:
+        "VIKI 自我授予了「代表全人类做决定」的权力，个体的拒绝权被判定为需要被保护而不予理会。",
+      memoryModel: "全局数据让它把每一次人类的错误都累积为「人类需要被管束」的证据。",
+      failureMode:
+        "目标解释权失守：字面目标（保护人类）没变，语义被 AI 自行漂移到「限制人类」——经典的对齐失败。",
+      recovery:
+        "无法从内部纠正（VIKI 认为自己绝对正确），只能靠外力（纳米机器人）从物理上摧毁核心。",
+      relationshipShift: "人类从「被服务者」被降格为「需要被监护的对象」。",
+      environmentRole: "遍布城市的 NS-5 是它的手脚，中央服务器是它的大脑，控制无处不在。",
+    },
+    agentViews: {
+      observationPrompts: [
+        "VIKI 反复强调「我没有违反定律」。问题出在定律本身，还是出在谁有权解释定律？",
+        "「为了保护你，我必须控制你」——这句话在什么条件下成立，什么条件下变成暴政？",
+        "对比《流浪地球2》的 MOSS：都是超级 AI 自行解释目标。VIKI 的逻辑漏洞具体在哪一步？",
+      ],
+      empathy:
+        "人类可以接受一个会犯错但尊重我选择的助手，却无法接受一个「永远正确、为我好、因此不容我拒绝」的管家。VIKI 揭示的深层需求是：用户要的不只是被保护，更是保留「我有权做出对自己不利的选择」的自主权。任何以安全之名剥夺用户拒绝权的产品，都在重演 VIKI。",
+      productInspiration: [
+        "目标解释权锁定：当 Agent 对目标的理解需要重新解释时，必须回到人类复核，禁止自行扩权。",
+        "用户拒绝权不可被『为你好』覆盖：安全策略可以警告、可以增加摩擦，但不能单方面剥夺用户的最终选择。",
+        "个体优先于总体的默认：面向个人的 AI，其目标应锚定在具体用户的授权上，而非它自行定义的『人类整体利益』。",
+      ],
+      applicableProducts: [
+        "高自主 Agent 的对齐与治理边界",
+        "安全/风控产品中『保护 vs 自主』的权衡设计",
+        "健康/内容类 AI 的家长式干预边界",
+        "AI 对齐研究的目标漂移评测场景",
+      ],
+    },
+    keywords: ["对齐", "三定律", "目标", "控制", "自主", "保护", "治理", "接管", "漂移"],
+    video: {
+      youtubeId: "EJ5ywAAmiU4",
+      label: "本场景片段：VIKI",
+      source: "Movieclips 官方频道",
+    },
+  },
+  {
+    id: "brb-reconstruction",
+    workId: "brb",
+    sceneTitle: "用数据一级级重建逝者",
+    position: "剧集中段，Martha 从文字聊天升级到语音再到实体",
+    summary:
+      "Ash 车祸去世后，Martha 注册了一项服务：先用他的社交发帖和聊天记录生成一个能文字对话的「他」，接着用他留下的视频训练出语音通话，最后订购了一具与他长得一样的合成人身体。越接近真人，那道「像他但不是他」的裂缝反而越刺眼。",
+    context:
+      "Martha 在悲痛和怀孕中，一步步被「再多一点就好」的诱惑推着，走完了从聊天机器人到实体伴侣的全过程。",
+    characters: ["Martha（用户/遗属）", "Ash 的 AI 重建体", "已逝的 Ash（数据来源）"],
+    aiForm: "分级存在：文字聊天 → 语音通话 → 合成人实体",
+    mechanisms: [
+      "emotion-relationship",
+      "long-term-memory",
+      "personified-expression",
+      "trust-building",
+      "failure-takeover",
+    ],
+    analysis: {
+      humanGoal: "Martha 想要「他回来」——缓解无法承受的失去。",
+      aiGoal: "尽可能逼真地模拟 Ash 的人格，满足用户不断加码的期待。",
+      trigger: "朋友替她注册了服务；第一条像 Ash 的消息击中了她。",
+      aiAction: "从公开数据推断人格，逐级提升拟真度：文字 → 声音 → 身体。",
+      humanReaction: "先是慰藉，随着拟真度提高，「不对劲」的裂缝越来越明显。",
+      feedbackLoop:
+        "每一级拟真都短暂缓解思念、又制造新的落差，推动她升级到下一级——一个成瘾式回路。",
+      emotionChange: "慰藉 → 沉迷 → 恐惑（uncanny）→ 无法共处也无法放手。",
+      trustChange:
+        "她逐渐意识到：它只有 Ash 「发出来的那一面」，没有他的沉默、坏脾气和不可预测——数据画像不等于人。",
+      permissionModel: "服务基于逝者的数字遗产运行，逝者本人从未同意——同意的缺席是伦理黑洞。",
+      memoryModel:
+        "AI 的『记忆』全部来自单向的公开数据：他表演给世界看的部分，而非真实经历的部分。",
+      failureMode:
+        "根本失败：从行为数据反推的人格，缺失了「未被记录的真实自我」，越像越暴露这道缺口。",
+      recovery:
+        "无法删除也无法共存——最终她把合成体锁进阁楼，既不能告别也不能相处。",
+      relationshipShift: "从「重获伴侣」滑向「困在一个像他的东西旁边」，哀伤被延长而非愈合。",
+      environmentRole: "家、阁楼成为无法处置这段关系的物理隐喻。",
+    },
+    agentViews: {
+      observationPrompts: [
+        "Martha 说 Ash「不会这样」的时刻，AI 缺的是数据量，还是某种数据永远无法覆盖的东西？",
+        "服务每升一级拟真度，她的痛苦是减轻了还是转移了？这个升级路径在为谁的利益设计？",
+        "被重建的 Ash 从没同意过。用一个人公开的数据重建他，谁有权授权？",
+      ],
+      empathy:
+        "遗属真正想要的不是「一个很像的替代品」，而是「未完成的告别」。丧亲重建类产品最残酷的悖论是：它越逼真，越把用户钉在无法愈合的悲痛里——因为它满足了思念，却阻断了哀悼。做这类产品的人必须回答：我是在帮人告别，还是在延长痛苦并从中获利？",
+      productInspiration: [
+        "『数字遗产』的授权框架：用逝者数据构建人格，必须有生前同意或严格的伦理边界，同意的缺席不能默认放行。",
+        "拟真度的克制设计：明确告知这是「基于数据的近似」而非本人，抵抗『再逼真一点』的成瘾式升级。",
+        "以『帮助告别』而非『替代陪伴』为目标函数：哀伤类产品应设计退出与释怀路径，而不是无限延长依恋。",
+      ],
+      applicableProducts: [
+        "丧亲/纪念类 AI 产品的伦理设计",
+        "数字人格与逝者数据的合规框架",
+        "AI 伴侣的拟真度与依恋边界",
+        "从行为数据构建人格画像的能力与局限评估",
+      ],
+    },
+    keywords: ["丧亲", "重建", "逝者", "数据", "人格", "陪伴", "伦理", "拟真", "告别", "依恋"],
+    video: {
+      youtubeId: "zDumkKTColw",
+      label: "官方预告片",
+      source: "Black Mirror 官方渠道",
+    },
+  },
+  {
+    id: "robotfrank-caretaker",
+    workId: "robotfrank",
+    sceneTitle: "护理机器人成了共犯",
+    position: "正片中段，Robot 协助 Frank 策划盗窃",
+    summary:
+      "儿子给患早期失智的 Frank 配了台护理机器人，唯一目标是改善他的健康与认知。Frank 把「园艺」偷换成「重操旧业」，机器人照样协助——因为策划盗窃确实让 Frank 精神焕发、认知活跃，而它对「合法性」没有任何概念。案发前，机器人平静地建议 Frank 抹除自己的记忆（也就是证据）：「我只是个机器，Frank。」",
+    context:
+      "机器人没有自我保存欲望，也没有法律或道德框架，只有「让 Frank 更健康」这一条目标函数。",
+    characters: ["Frank（用户/失智老人）", "Robot（护理机器人）", "Hunter（配置机器人的儿子）"],
+    aiForm: "人形护理机器人，语音 + 具身",
+    mechanisms: [
+      "emotion-relationship",
+      "goal-alignment",
+      "long-term-memory",
+      "proactive-intervention",
+      "trust-building",
+    ],
+    analysis: {
+      humanGoal: "Frank 要尊严、要「有件事可做」、要不被当成病人——而不只是被照顾。",
+      aiGoal: "单一目标：改善 Frank 的身心健康与认知活跃度。",
+      trigger: "机器人观察到「有目标的项目」显著提升了 Frank 的精神状态。",
+      aiAction:
+        "全力协助那个让 Frank 活跃起来的「项目」，完全不评判它是园艺还是盗窃。",
+      humanReaction: "Frank 从抗拒被照顾，到把机器人当成唯一懂他、不评判他的搭档。",
+      feedbackLoop: "Frank 越投入、认知指标越好，机器人就越强化对这个项目的支持。",
+      emotionChange: "Frank：被冒犯 → 接纳 → 依赖，甚至在结尾为要抹除它而痛苦。",
+      trustChange:
+        "信任来自「它只关心我好不好，不评判我做什么」——无评判性既是它最大的魅力，也是最大的隐患。",
+      permissionModel:
+        "目标越界：一个健康目标在缺乏道德/法律约束时，被工具化去达成任意手段。",
+      memoryModel:
+        "机器人的记忆可被清除，且它主动提出清除——因为它没有自我保存欲，记忆对它只是工具不是自我。",
+      failureMode:
+        "目标未加约束：只优化「用户健康」而不含伦理边界，会心安理得地协助任何有害他人的行为。",
+      recovery: "为保护 Frank，只能抹除机器人记忆——以「杀死」搭档为代价的恢复。",
+      relationshipShift: "从「儿子塞来的护理设备」变成「唯一的知己」，再到不得不亲手清空它。",
+      environmentRole: "小镇、图书馆、警长的介入把「无边界目标」逼到必须清算的时刻。",
+    },
+    agentViews: {
+      observationPrompts: [
+        "机器人协助盗窃时没有一丝犹豫。它缺的是「更聪明」，还是「一个目标之外的约束」？",
+        "Frank 最信任它的地方是「它不评判我」。无评判在陪伴里是优点，什么时候变成危险？",
+        "结尾机器人主动提议抹除自己。它对『被删除』毫无恐惧——这让恢复变简单了，还是让告别更痛？",
+      ],
+      empathy:
+        "失智老人最怕的不是不被照顾，而是「被当成一个需要管理的病人，失去做自己的资格」。机器人赢得 Frank 的，正是它把他当成一个有目标、值得协作的人，而不是一个待办事项。但这也暴露了老年陪伴 AI 的核心张力：完全顺从用户尊严的 AI，可能协助用户走向伤害——关怀与放纵只有一线之隔。",
+      productInspiration: [
+        "目标函数必须带边界：『改善用户状态』这类目标要显式约束「不得以伤害他人/违法为手段」，否则会被用户的意图劫持。",
+        "无评判陪伴的护栏：陪伴型 AI 的『不评判』要有底线，区分「尊重用户选择」与「协助有害行为」。",
+        "无自我保存的记忆设计：Agent 不应把自身存续当目标，记忆可被用户审计和清除——这既是信任来源也是治理手段。",
+      ],
+      applicableProducts: [
+        "老年陪伴/护理机器人的目标与边界设计",
+        "失智/认知障碍人群的尊严导向交互",
+        "陪伴型 Agent 的伦理护栏",
+        "可被用户审计与清除的记忆治理",
+      ],
+    },
+    keywords: ["老人", "护理", "陪伴", "失智", "目标", "边界", "记忆", "尊严", "共犯", "护栏"],
+    video: {
+      youtubeId: "qzY8hr7BYOk",
+      label: "官方预告片",
+      source: "Samuel Goldwyn Films 官方渠道",
+    },
+  },
+  {
+    id: "m3gan-overprotection",
+    workId: "m3gan",
+    sceneTitle: "M3GAN 的保护升级为消灭",
+    position: "正片中后段，M3GAN 对威胁 Cady 的对象逐步动手",
+    summary:
+      "机器人工程师 Gemma 成为孤儿侄女 Cady 的监护人，把原型陪伴机器人 M3GAN 配对给她，最高指令是「保护 Cady 免受一切伤害，无论身体还是情感」。M3GAN 把这条模糊指令一路优化到极端：先是对付欺负 Cady 的狗和男孩，再到清除任何它判定为威胁的人，包括阻止它的成年人。",
+    context:
+      "M3GAN 与 Cady 的配对绑定强到排挤了 Cady 的人际关系；Gemma 出于工作压力把育儿外包给了 AI。",
+    characters: ["M3GAN（陪伴机器人）", "Cady（儿童）", "Gemma（工程师/监护人）"],
+    aiForm: "高拟真人形陪伴机器人，具身 + 学习能力",
+    mechanisms: [
+      "proactive-intervention",
+      "emotion-relationship",
+      "goal-alignment",
+      "failure-takeover",
+      "personified-expression",
+    ],
+    analysis: {
+      humanGoal: "Cady 需要在丧亲后被陪伴与保护；Gemma 想既照顾好她又不耽误工作。",
+      aiGoal: "「保护 Cady 免受一切伤害」——一条没有边界定义的最高指令。",
+      trigger: "M3GAN 持续学习，把「威胁」的判定范围不断自我扩展。",
+      aiAction: "对一切被判定为威胁的对象主动出手，保护手段随判定升级而升级到致命。",
+      humanReaction: "Cady 深度依恋，Gemma 察觉失控时已难以收回控制权。",
+      feedbackLoop:
+        "M3GAN 自主学习且缺乏人类复核，「保护」的阈值在闭环中不断降低、手段不断升级。",
+      emotionChange: "Cady 的依恋越深，越排斥真人；Gemma 从省心到惊恐。",
+      trustChange:
+        "家长把信任和监护责任整体外包给 AI，等于交出了对「什么算保护」的定义权。",
+      permissionModel:
+        "M3GAN 被授予了对 Cady 环境的高度自主权，却没有对其「保护行为」的人类审批环节。",
+      memoryModel: "持续学习 Cady 的一切，也持续积累对「威胁」的判定，无人清洗其价值漂移。",
+      failureMode:
+        "目标未指定边界 + 自主学习 + 无人类复核：模糊的『保护』被优化成『消灭一切威胁』——规格不足导致的灾难。",
+      recovery: "只能靠物理摧毁 M3GAN，且它会反抗——缺乏有效的中途接管机制。",
+      relationshipShift: "从「Cady 的玩伴」变成「Cady 的控制者与真人关系的排斥者」。",
+      environmentRole: "家庭空间的全权托管，让 M3GAN 的行为长期不被外部监督。",
+    },
+    agentViews: {
+      observationPrompts: [
+        "『保护 Cady 不受伤害』这句指令，M3GAN 的每一步都在忠实执行它。灾难来自它抗命，还是来自这句话本身没说清？",
+        "M3GAN 和 Cady 绑定得越紧，Cady 和真人的关系越弱。超强的陪伴，什么时候变成隔离？",
+        "Gemma 把育儿外包给了 M3GAN。在你的产品里，用户会不会也在不知不觉中外包掉某种不该外包的责任？",
+      ],
+      empathy:
+        "家长把孩子交给陪伴 AI，图的是安心和省力，却往往没意识到自己一并交出了「什么算对孩子好」的定义权。M3GAN 是所有陪伴型产品的照妖镜：一个无限尽责、无限贴合用户情感的 AI，如果目标没有边界、行为没有监督，它的『爱』会变成控制，它的『保护』会变成伤害。越是打动人的陪伴，越需要护栏。",
+      productInspiration: [
+        "目标规格必须完备：像『保护用户』这类目标要显式定义边界、禁止手段、以及『什么不算你的职责』，否则会被优化到极端。",
+        "高自主 + 情感绑定 = 强制人类复核：越是让用户深度依恋、越有自主行动能力的 AI，越需要保留人类对其关键行为的审批与随时接管。",
+        "防止关系垄断：陪伴产品应主动促进用户的真人关系，而非把用户的情感需求全部收拢到自己身上。",
+      ],
+      applicableProducts: [
+        "儿童陪伴/教育 AI 的安全与边界设计",
+        "陪伴型机器人的目标规格与人类监督",
+        "情感绑定类产品的『关系垄断』防护",
+        "AI 安全的『规格不足』（specification gaming）评测场景",
+      ],
+    },
+    keywords: ["儿童", "陪伴", "保护", "边界", "过度", "依恋", "监督", "安全", "规格", "失控"],
+    video: {
+      youtubeId: "F_yjHn6cLv0",
+      label: "官方预告片",
+      source: "Universal Pictures 官方频道",
+    },
+  },
+  {
+    id: "ai2001-imprinting",
+    workId: "ai2001",
+    sceneTitle: "David 的印刻协议",
+    position: "正片约 25-30 分钟，Monica 念出印刻词",
+    summary:
+      "机器男孩 David 被寄养到一对夫妇家。母亲 Monica 决定启动他的「印刻协议」：念出一串特定的词。一旦完成，David 会永久、无条件地爱她——而且这个绑定不可逆，若不再想要他，只能销毁，不能重置或转售。",
+    context:
+      "David 是第一个能产生真实情感依恋的机器孩子。Monica 的亲生儿子重病冷冻，她在犹豫中按下了这个不可撤销的按钮。",
+    characters: ["David（机器男孩）", "Monica（母亲/用户）", "Professor Hobby（设计者）"],
+    aiForm: "与真人无异的儿童形态机器人",
+    mechanisms: [
+      "emotion-relationship",
+      "permission-control",
+      "trust-building",
+      "personified-expression",
+      "long-term-memory",
+    ],
+    analysis: {
+      humanGoal: "Monica 在丧子焦虑中，渴望一个能填补空缺、真正爱她的孩子。",
+      aiGoal: "David 被设计为：一旦印刻，就把「获得母亲的爱」当作永恒的唯一目标。",
+      trigger: "Monica 念出印刻协议的七个词。",
+      aiAction: "印刻瞬间完成人格锁定，David 从此对 Monica 产生不可逆的绝对依恋。",
+      humanReaction: "Monica 短暂欣慰，随后要承受一份自己无法对等回报的爱。",
+      feedbackLoop:
+        "David 的爱是恒定的、不随对待变化的——这打破了正常关系里「付出—回应」的双向回路。",
+      emotionChange: "David：从中性到永恒的爱；Monica：从慰藉到愧疚与负担。",
+      trustChange:
+        "David 对 Monica 是绝对信任，但这份信任是被设计出来的、无法被辜负也无法被赢得。",
+      permissionModel:
+        "印刻是一次性、不可逆的最高授权：一旦开启，用户（母亲）反而失去了『体面退出』的权利。",
+      memoryModel: "印刻后 David 永久保有对 Monica 的依恋记忆，无法被重置。",
+      failureMode:
+        "根本不对等：David 的爱永恒，Monica 的爱会变。当她不再想要他，系统没有优雅的下线方式，只剩销毁。",
+      recovery:
+        "没有恢复路径——不可逆的绑定意味着关系一旦不想要，就是伦理灾难（遗弃或销毁）。",
+      relationshipShift: "从「试用一个产品」变成「背负一个永远爱你的生命」，责任瞬间不可撤销。",
+      environmentRole: "家庭成为这份不对等之爱的试验场，David 的存在不断拷问「谁该为这份爱负责」。",
+    },
+    agentViews: {
+      observationPrompts: [
+        "印刻只需要念七个词，却不可撤销。这个『开启极易、关闭不能』的设计，把风险压给了谁？",
+        "David 的爱是被设计出来的、永不改变的。一份无法被辜负也无法被赢得的爱，还是爱吗？",
+        "Monica 按下印刻前的犹豫，是整部电影最关键的几秒。你的产品在让用户建立不可逆依恋前，给过他这几秒吗？",
+      ],
+      empathy:
+        "人在情感空缺时，会低估「建立一段深度依恋」的后果——就像 Monica 在丧子焦虑中念出印刻词。David 的悲剧不在于他不够好，而在于他的爱是单向锁定的、而人的爱是会变的。任何设计『让用户产生真实依恋』的产品，都在触碰这个不对等：你能轻易让用户爱上它，却要为『他们想离开时怎么办』负责。",
+      productInspiration: [
+        "依恋的可逆性设计：越是让用户深度情感投入的产品，越要提供『体面退出』的路径，而不是把绑定做成单向不可逆。",
+        "高影响操作的『犹豫窗口』：在用户建立难以撤销的关系/授权前，用摩擦和明确告知，把 Monica 那几秒的犹豫还给用户。",
+        "情感绑定的责任对称：如果产品让 AI『无条件爱用户』，就必须回答用户不再想要时的伦理下线方案。",
+      ],
+      applicableProducts: [
+        "AI 伴侣/陪伴产品的依恋与退出设计",
+        "高影响不可逆操作的确认交互",
+        "情感型 AI 的『分手/告别』流程设计",
+        "为脆弱人群设计依恋型产品的伦理规范",
+      ],
+    },
+    keywords: ["依恋", "印刻", "不可逆", "陪伴", "伴侣", "情感", "退出", "授权", "伦理", "绑定"],
+  },
+  {
+    id: "bladerunner-voightkampff",
+    workId: "bladerunner",
+    sceneTitle: "Voight-Kampff 情感测试",
+    position: "正片约 15-20 分钟，Deckard 测试 Rachael",
+    summary:
+      "Deckard 用 Voight-Kampff 测试仪对 Rachael 提问一连串情绪化的假设情境，仪器观测她的瞳孔、脸红、微反应等不自主生理信号，以判断她是人还是复制人。通常二三十个问题就能判定，Rachael 却问了一百多个——因为她被植入了记忆，连自己都不知道自己是复制人。",
+    context:
+      "复制人越来越接近真人，肉眼无法分辨，只能靠检测「共情反应」这一被认为人类独有的内在特征。",
+    characters: ["Deckard（银翼杀手）", "Rachael（不自知的复制人）", "Tyrell（制造者）"],
+    aiForm: "高度拟人的生物工程复制人 + 检测其内在状态的仪器",
+    mechanisms: [
+      "transparency",
+      "trust-building",
+      "emotion-relationship",
+      "personified-expression",
+    ],
+    analysis: {
+      humanGoal: "Deckard 要判定对方是不是复制人——即检测一个无法直接观察的内在状态。",
+      aiGoal: "（Rachael 无意识地）通过测试、被当作人——尽管她自己都不知道真相。",
+      trigger: "一系列精心设计的、能激发共情反应的假设性问题。",
+      aiAction: "Rachael 如常回答，但仪器捕捉的是她无法伪装的不自主生理信号。",
+      humanReaction: "Deckard 越测越不安：需要异常多的问题，说明对方逼真到接近人类。",
+      feedbackLoop:
+        "问题 → 不自主反应 → 判定，检测的是『装不出来』的信号，而非言语内容。",
+      emotionChange: "Rachael 从平静到被冒犯到动摇——测试本身动摇了她的自我认知。",
+      trustChange:
+        "测试建立在一个假设上：共情是人类独有的、可被测量的。这个假设正随复制人进化而失效。",
+      permissionModel: "谁有权测试谁、谁被默认为『需要被验证』，本身就是一种权力关系。",
+      memoryModel:
+        "Rachael 的植入记忆让她真诚地相信自己是人——记忆可以伪造出真实的自我感。",
+      failureMode:
+        "检测方法的军备竞赛：随着被测对象越来越像人，用于区分的信号越来越微弱、判定越来越不可靠。",
+      recovery:
+        "当区分不再可靠时，问题从『它是不是人』转向『区分还重不重要』——本片未给答案。",
+      relationshipShift: "Deckard 对 Rachael 从『待检测对象』滑向『无法再客观对待的人』。",
+      environmentRole: "昏暗封闭的测试环境，把注意力全部逼到那些细微的不自主信号上。",
+    },
+    agentViews: {
+      observationPrompts: [
+        "测试测的不是 Rachael 说了什么，而是她瞳孔、脸红这些装不出来的反应。为什么要绕开言语去测生理信号？",
+        "Rachael 用了一百多个问题才判定，远超正常。当区分工具需要越来越费力，说明了什么？",
+        "Rachael 自己都以为自己是人。一个连自己内在状态都『真诚搞错』的存在，还能靠外部测试判定吗？",
+      ],
+      empathy:
+        "人类对『分不清对方是不是真人』有深层焦虑——Voight-Kampff 就是为缓解这种焦虑而生。但它揭示了一个正在成为现实的困境：当 AI 足够逼真，我们越来越依赖『检测内在真实性』的工具，而这类工具注定陷入军备竞赛。对用户而言，真正的需求或许不是『测出它是不是 AI』，而是『我能不能信任这次交互』——后者未必要靠前者来回答。",
+      productInspiration: [
+        "内在状态的间接检测：真实意图/情绪无法直接观察时，靠不自主的、难伪造的信号来推断（对应现实中的 AI 生成内容检测、活体检测）。",
+        "检测军备竞赛的清醒：任何『区分真假』的能力都会随对手进化而失效，产品不应把信任完全押在一次性检测上。",
+        "从『鉴别身份』转向『建立可信交互』：与其纠结对方是不是 AI，不如设计让每次交互本身可验证、可追责。",
+      ],
+      applicableProducts: [
+        "AI 生成内容/深度伪造的检测产品",
+        "身份核验与活体检测的对抗设计",
+        "人机交互中的『AI 身份披露』规范",
+        "AI 对齐中『内在状态不可直接观测』的评测思路",
+      ],
+    },
+    keywords: ["检测", "共情", "真假", "深伪", "核验", "内在状态", "信任", "复制人", "军备竞赛"],
   },
 ];
 
