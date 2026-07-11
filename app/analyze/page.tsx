@@ -121,7 +121,12 @@ export default function AnalyzePage() {
         body: JSON.stringify({ frames, context }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "分析失败");
+      if (!res.ok) {
+        const msg = data?.detail
+          ? `${data.error}\n\n服务商原文：${data.detail}`
+          : data?.error || "分析失败";
+        throw new Error(msg);
+      }
       setDraft(data.draft);
       setPhase("done");
     } catch (e) {
@@ -210,7 +215,11 @@ export default function AnalyzePage() {
           </>
         )}
 
-        {error && <p className="mt-4 text-sm text-red-400">{error}</p>}
+        {error && (
+          <p className="mt-4 whitespace-pre-wrap rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">
+            {error}
+          </p>
+        )}
 
         {/* 拆解结果 */}
         {draft && (

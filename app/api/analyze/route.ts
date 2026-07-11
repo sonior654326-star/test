@@ -102,8 +102,18 @@ export async function POST(req: Request) {
 
     if (!res.ok) {
       const detail = await res.text().catch(() => "");
+      let error = `模型调用失败（HTTP ${res.status}）`;
+      if (res.status === 401 || res.status === 403) {
+        error =
+          `密钥被服务商拒绝（HTTP ${res.status}）。请检查：` +
+          `1) OPENAI_API_KEY 的值是否复制正确、无多余空格；` +
+          `2) Sakana 账号是否已开通额度/计费；` +
+          `3) OPENAI_BASE_URL 是否为 https://api.sakana.ai/v1`;
+      } else if (res.status === 404) {
+        error = `模型不存在（HTTP 404）。视频分析需要视觉模型，请把 OPENAI_VISION_MODEL 设为 fugu-ultra`;
+      }
       return NextResponse.json(
-        { error: `模型调用失败（${res.status}）`, detail: detail.slice(0, 300) },
+        { error, detail: detail.slice(0, 400) },
         { status: 502 },
       );
     }
