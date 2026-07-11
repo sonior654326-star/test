@@ -4,7 +4,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SCENES_WITH_WORK } from "@/data/scenes";
 import { MECHANISM_LABELS } from "@/lib/types";
+import { INDUSTRIES, industryCounts } from "@/lib/industries";
 import Link from "next/link";
+
+const IND_COUNTS = industryCounts();
 
 const EXAMPLES = [
   "我想做一个能主动帮助用户、但又不会让人感到被监视的桌面 Agent",
@@ -76,6 +79,37 @@ export default function Home() {
               {ex}
             </button>
           ))}
+        </div>
+
+        <div className="mt-14 border-t border-zinc-800 pt-8">
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-sm font-medium text-zinc-300">按行业进入</h2>
+            <p className="font-mono text-[10px] text-zinc-600">FIND WHAT SPARKS YOU</p>
+          </div>
+          <p className="mt-1 text-xs text-zinc-500">
+            你在做哪类 AI？直接看最能启发你的素材。
+          </p>
+          <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+            {INDUSTRIES.map((ind) => (
+              <Link
+                key={ind.slug}
+                href={`/industry/${ind.slug}`}
+                className="group flex items-center justify-between rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-3 transition hover:border-teal-400/40"
+              >
+                <div>
+                  <p className="font-medium text-zinc-200 group-hover:text-teal-200">
+                    {ind.name}
+                  </p>
+                  <p className="mt-0.5 line-clamp-1 text-[11px] text-zinc-500">
+                    {ind.blurb}
+                  </p>
+                </div>
+                <span className="ml-3 shrink-0 font-mono text-xs text-teal-300/70">
+                  {IND_COUNTS[ind.slug]} →
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
 
         <div className="mt-14 border-t border-zinc-800 pt-8">
