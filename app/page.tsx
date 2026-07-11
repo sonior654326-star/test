@@ -1,0 +1,118 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { SCENES_WITH_WORK } from "@/data/scenes";
+import { MECHANISM_LABELS } from "@/lib/types";
+import Link from "next/link";
+
+const EXAMPLES = [
+  "我想做一个能主动帮助用户、但又不会让人感到被监视的桌面 Agent",
+  "AI 陪伴产品如何建立长期信任，而不是靠讨好和操纵？",
+  "家庭机器人面对多个家庭成员时，立场和权限应该怎么设计？",
+  "我的 Agent 拿到了很高的系统权限，失控时用户怎么接管？",
+];
+
+export default function Home() {
+  const router = useRouter();
+  const [query, setQuery] = useState("");
+
+  const go = (q: string) => {
+    const v = q.trim();
+    if (!v) return;
+    router.push(`/results?q=${encodeURIComponent(v)}`);
+  };
+
+  return (
+    <main className="lab-grid flex flex-1 flex-col items-center px-6 py-16">
+      <div className="w-full max-w-2xl">
+        <p className="font-mono text-xs tracking-[0.3em] text-teal-300/70 uppercase">
+          ImagineLab · 人机关系实验档案馆
+        </p>
+        <h1 className="mt-4 text-3xl sm:text-4xl font-semibold leading-snug text-zinc-50">
+          你正在思考什么样的 AI 产品？
+        </h1>
+        <p className="mt-3 text-zinc-400 leading-relaxed">
+          影视已经替人类预演了大量尚未被工程实现的人机关系。输入你的问题，
+          从这些想象实验中获得交互机制与产品启发。
+        </p>
+
+        <div className="mt-8">
+          <textarea
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                go(query);
+              }
+            }}
+            rows={3}
+            placeholder="描述你的产品、你卡住的交互问题，或一个模糊的想法……"
+            className="w-full resize-none rounded-xl border border-zinc-700/80 bg-zinc-900/80 p-4 text-zinc-100 placeholder:text-zinc-500 focus:border-teal-400/60 focus:outline-none"
+          />
+          <button
+            onClick={() => go(query)}
+            className="mt-3 w-full rounded-xl bg-teal-400/90 py-3 font-medium text-zinc-950 transition hover:bg-teal-300 sm:w-auto sm:px-8"
+          >
+            进入想象空间 →
+          </button>
+        </div>
+
+        <div className="mt-8 space-y-2">
+          <p className="text-xs text-zinc-500">试试这些问题：</p>
+          {EXAMPLES.map((ex) => (
+            <button
+              key={ex}
+              onClick={() => go(ex)}
+              className="block w-full rounded-lg border border-zinc-800 bg-zinc-900/40 px-4 py-2.5 text-left text-sm text-zinc-400 transition hover:border-teal-400/40 hover:text-zinc-200"
+            >
+              {ex}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-14 border-t border-zinc-800 pt-8">
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-sm font-medium text-zinc-300">
+              场景档案 · {SCENES_WITH_WORK.length} 条
+            </h2>
+            <p className="font-mono text-[10px] text-zinc-600">
+              STRUCTURED HUMAN-AI SCENE ARCHIVE
+            </p>
+          </div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {SCENES_WITH_WORK.map((s) => (
+              <Link
+                key={s.id}
+                href={`/scene/${s.id}`}
+                className="group rounded-xl border border-zinc-800 bg-zinc-900/40 p-4 transition hover:border-teal-400/40"
+              >
+                <p className="font-mono text-[10px] text-zinc-500">
+                  《{s.work.title}》 {s.work.year}
+                </p>
+                <p className="mt-1 font-medium text-zinc-200 group-hover:text-teal-200">
+                  {s.sceneTitle}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {s.mechanisms.slice(0, 3).map((m) => (
+                    <span
+                      key={m}
+                      className="rounded-full border border-zinc-700 px-2 py-0.5 text-[10px] text-zinc-400"
+                    >
+                      {MECHANISM_LABELS[m]}
+                    </span>
+                  ))}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <footer className="mt-14 border-t border-zinc-800 pt-6 text-xs leading-relaxed text-zinc-600">
+          本站不托管任何影视片段，只保存对场景的结构化研究拆解；请通过正版渠道观看原片。
+        </footer>
+      </div>
+    </main>
+  );
+}
