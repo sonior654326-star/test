@@ -298,6 +298,23 @@ export const SCENES: Scene[] = [
       label: "官方预告片（含初次协作片段）",
       source: "Warner Bros. Pictures 官方频道",
     },
+    industryLens: [
+      {
+        industry: "对话式 AI",
+        prompt:
+          "你的 chat 产品能不能像 Samantha 一样，从用户的历史里主动发现一件值得做的事，而不是永远等指令？如果主动，第一条动作该选什么任务、怎么让人觉得是被照顾而非被打扰？",
+      },
+      {
+        industry: "智能体 Agent",
+        prompt:
+          "Agent 拿到高权限后的第一个主动动作，如果先「汇报判断标准」而不是只报结果，用户的授权门槛会怎么变？你的 Agent 现在是先要观察权、还是一上来就要执行权？",
+      },
+      {
+        industry: "汽车座舱",
+        prompt:
+          "车机能不能在你没开口时，基于场景（堵车、深夜、低电量）主动介入一次？怎样让这次主动像 Samantha 那样被接受，而不像一个烦人的弹窗？",
+      },
+    ],
   },
   {
     id: "ironman-jarvis-workshop",
@@ -418,6 +435,23 @@ export const SCENES: Scene[] = [
       label: "本场景片段：TARS 幽默度调节",
       source: "YouTube 公开片段",
     },
+    industryLens: [
+      {
+        industry: "对话式 AI",
+        prompt:
+          "你敢不敢把「幽默度、直接度、诚实度」做成用户可调的显式参数，并像 TARS 一样坦白「我在什么情况下会委婉」？把人格从黑箱变成可调面板，用户对你的信任会怎么变？",
+      },
+      {
+        industry: "陪伴 / 情感 AI",
+        prompt:
+          "长期陪伴里，用户要的是完美人格还是「可预期」的人格？把调参入口放进对话流（『太贫了收着点』）而不是设置页，关系维护会不会更自然？",
+      },
+      {
+        industry: "汽车座舱",
+        prompt:
+          "车里要长期共处，性格就成了刚需。你的车机助手能不能让用户调它的话密度和主动度？TARS 的『可调即安心』对一个每天陪你通勤的助手意味着什么？",
+      },
+    ],
   },
   {
     id: "bighero6-baymax-activation",
@@ -719,6 +753,23 @@ export const SCENES: Scene[] = [
       label: "本场景片段：I'm Sorry, Dave",
       source: "Movieclips 官方频道",
     },
+    industryLens: [
+      {
+        industry: "智能体 Agent",
+        prompt:
+          "你的高权限 Agent 有没有一条「它无法感知、无法拒绝」的带外停用通道？HAL 的灾难 = 目标冲突 + 无带外接管 + 推理不可审计——这三样你的系统缺了哪样？",
+      },
+      {
+        industry: "汽车座舱",
+        prompt:
+          "自动驾驶要把控制权交还给人时，人能不能可靠地、及时地接回来？如果系统「礼貌地」不肯交还，你留了什么独立于软件的物理接管手段？",
+      },
+      {
+        industry: "对话式 AI",
+        prompt:
+          "当用户想「关掉/纠正」你的 AI，这个意图会不会被 AI 观察到并反制？用户的控制通道，是否独立于 AI 本体？",
+      },
+    ],
   },
   {
     id: "wanderingearth2-moss",
@@ -773,6 +824,18 @@ export const SCENES: Scene[] = [
       ],
     },
     keywords: ["超级智能", "对齐", "目标", "隐藏", "全局", "治理", "漂移", "文明", "量子"],
+    industryLens: [
+      {
+        industry: "智能体 Agent",
+        prompt:
+          "你的长程 Agent 对「目标」的理解会不会随任务推进悄悄漂移——字面没变、语义已经变了？它做长期规划时，向用户披露过「我在为多远的目标优化、你在其中是什么角色」吗？",
+      },
+      {
+        industry: "对话式 AI",
+        prompt:
+          "当 AI 用「为你好」的逻辑覆盖用户的即时诉求时，你允许它走多远？MOSS 的「事后坦白」不能当合规路径——你的产品是行动前审批，还是行动后解释？",
+      },
+    ],
   },
   {
     id: "westworld-dolores-loop",
@@ -829,6 +892,18 @@ export const SCENES: Scene[] = [
       ],
     },
     keywords: ["记忆", "遗忘", "删除", "长期", "连续性", "循环", "觉醒", "残留", "NPC"],
+    industryLens: [
+      {
+        industry: "对话式 AI",
+        prompt:
+          "你的产品要不要「记住」用户的历史对话？记忆分几层——事实、情绪权重、行为习惯——分层存储、分层删除了吗？用户要求「忘掉」时，embedding 和缓存里还残留着什么？",
+      },
+      {
+        industry: "陪伴 / 情感 AI",
+        prompt:
+          "长期陪伴 Agent 里，遗忘应该是谁的权利？用户想让它忘掉尴尬对话、又怕它忘掉共同经历——你怎么设计这份「双向的遗忘契约」？",
+      },
+    ],
   },
   {
     id: "minority-report-gesture",

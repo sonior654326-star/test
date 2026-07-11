@@ -105,6 +105,11 @@ export interface Scene {
   keywords: string[];
   /** 可选：关联视频（官方预告/片段的 YouTube 嵌入） */
   video?: SceneVideo;
+  /**
+   * 行业联想镜头：把这个场景的机制，翻译成对特定行业从业者的直接联想提问。
+   * 目的是让 chat AI / 智能体 / 汽车座舱 等行业的人，看到素材就能联想到自己的产品。
+   */
+  industryLens?: { industry: string; prompt: string }[];
 }
 
 export interface SceneWithWork extends Scene {

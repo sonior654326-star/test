@@ -128,6 +128,27 @@ export default function ScenePage({
           </div>
         </section>
 
+        {/* 行业联想镜头：把机制翻译成对特定行业从业者的直接联想 */}
+        {scene.industryLens && scene.industryLens.length > 0 && (
+          <section className="mt-6 rounded-xl border border-teal-400/25 bg-teal-400/[0.04] p-5">
+            <p className="font-mono text-[11px] tracking-[0.2em] text-teal-300/80 uppercase">
+              如果你在做这些，先想想 · INDUSTRY LENS
+            </p>
+            <div className="mt-4 space-y-4">
+              {scene.industryLens.map((l) => (
+                <div key={l.industry} className="flex flex-col gap-1.5 sm:flex-row sm:gap-4">
+                  <span className="shrink-0 sm:w-24">
+                    <span className="inline-block rounded-md border border-teal-400/30 bg-teal-400/10 px-2.5 py-1 text-xs text-teal-200">
+                      {l.industry}
+                    </span>
+                  </span>
+                  <p className="text-sm leading-relaxed text-zinc-200">{l.prompt}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* 认知视角切换 */}
         <nav className="mt-8 flex gap-2 overflow-x-auto">
           {TABS.map((t) => (
