@@ -16,14 +16,27 @@ npm run dev
 
 打开 http://localhost:3000。**无需任何 API key 即可完整运行**（本地结构化匹配）。
 
-## 可选增强
+## AI 能力配置
 
-在 `.env.local`（本地）或 Vercel 环境变量中配置：
+在 `.env.local`（本地）或 Vercel 环境变量中配置。兼容 OpenAI 及所有 OpenAI 格式的服务商（Sakana、DeepSeek、Moonshot 等）：
 
 | 变量 | 作用 |
 | --- | --- |
-| `OPENAI_API_KEY` | 启用 LLM 增强的需求理解与场景重排（失败自动回退本地匹配） |
-| `OPENAI_MODEL` | 默认 `gpt-4o-mini` |
+| `OPENAI_API_KEY` | 必填（用 AI 功能时）。启用 LLM 匹配增强与视频分析 |
+| `OPENAI_BASE_URL` | 服务商接口地址，默认 `https://api.openai.com/v1` |
+| `OPENAI_MODEL` | 文本任务模型，默认 `gpt-4o-mini` |
+| `OPENAI_VISION_MODEL` | 视频分析用的视觉模型，默认取 `OPENAI_MODEL` |
+
+**使用 Sakana AI（console.sakana.ai）的配置：**
+
+```
+OPENAI_API_KEY=<你的 Sakana key>
+OPENAI_BASE_URL=https://api.sakana.ai/v1
+OPENAI_MODEL=fugu
+OPENAI_VISION_MODEL=fugu-ultra
+```
+
+注意：`/analyze` 视频分析需要视觉模型；Sakana 只有 `fugu-ultra` 支持图片输入。
 
 ## 部署到 Vercel（三步）
 

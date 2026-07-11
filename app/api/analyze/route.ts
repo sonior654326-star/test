@@ -18,6 +18,15 @@ export async function POST(req: Request) {
       { status: 501 },
     );
   }
+  const baseUrl = (
+    process.env.OPENAI_BASE_URL || "https://api.openai.com/v1"
+  ).replace(/\/$/, "");
+  // 视觉任务优先用 OPENAI_VISION_MODEL（如 Sakana 的 fugu-ultra），
+  // 未配置时退回 OPENAI_MODEL，再退回 gpt-4o-mini
+  const visionModel =
+    process.env.OPENAI_VISION_MODEL ||
+    process.env.OPENAI_MODEL ||
+    "gpt-4o-mini";
 
   let frames: string[] = [];
   let context = "";
@@ -73,7 +82,7 @@ export async function POST(req: Request) {
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 55000);
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    const res = await fetch(`${baseUrl}/chat/completions`, {
       method: "POST",
       signal: controller.signal,
       headers: {
@@ -81,7 +90,7 @@ export async function POST(req: Request) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+        model: visionModel,
         temperature: 0.5,
         response_format: { type: "json_object" },
         messages: [

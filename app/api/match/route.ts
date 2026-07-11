@@ -48,7 +48,10 @@ async function llmEnhance(
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 15000);
 
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+  const baseUrl = (
+    process.env.OPENAI_BASE_URL || "https://api.openai.com/v1"
+  ).replace(/\/$/, "");
+  const res = await fetch(`${baseUrl}/chat/completions`, {
     method: "POST",
     signal: controller.signal,
     headers: {
