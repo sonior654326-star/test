@@ -62,6 +62,21 @@ export default function Home() {
           </button>
         </div>
 
+        <Link
+          href="/deep/baymax"
+          className="mt-6 block rounded-xl border border-teal-400/30 bg-teal-400/[0.06] p-4 transition hover:border-teal-400/60"
+        >
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-teal-300/80">
+            单素材深挖 · 样板
+          </p>
+          <p className="mt-1.5 font-medium text-zinc-100">
+            大白：一个素材，挖到极限 →
+          </p>
+          <p className="mt-1 text-xs text-zinc-400">
+            视频站内直看 · 逐拍 / 机制 / 八视角 / 迁移 / 反事实 / 能力缺口 六层深挖
+          </p>
+        </Link>
+
         <p className="mt-3 text-sm">
           <Link href="/analyze" className="text-teal-300/80 hover:text-teal-200">
             或者：上传一段视频，让 AI 拆解它的交互机制 →
