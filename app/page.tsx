@@ -90,6 +90,7 @@ export default function Home() {
               >
                 <p className="font-mono text-[10px] text-zinc-500">
                   《{s.work.title}》 {s.work.year}
+                  {s.video && <span className="ml-1.5 text-teal-300/80">🎬 可看片段</span>}
                 </p>
                 <p className="mt-1 font-medium text-zinc-200 group-hover:text-teal-200">
                   {s.sceneTitle}
@@ -109,8 +110,32 @@ export default function Home() {
           </div>
         </div>
 
+        <div className="mt-14 border-t border-zinc-800 pt-8">
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-sm font-medium text-zinc-300">开放放映室</h2>
+            <p className="font-mono text-[10px] text-zinc-600">OPEN LICENSE SCREENING</p>
+          </div>
+          <p className="mt-2 text-xs text-zinc-500">
+            《Tears of Steel》—— Blender 基金会的开源科幻短片（CC-BY 授权，可自由观看）：
+            人类与失控机器人的战争，源于一段关于机器人的记忆重演实验。
+          </p>
+          <div className="mt-3 overflow-hidden rounded-xl border border-zinc-800 bg-black">
+            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+              <iframe
+                className="absolute inset-0 h-full w-full"
+                src="https://www.youtube-nocookie.com/embed/R6MlUcmOul8"
+                title="Tears of Steel - Blender VFX Open Movie"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+
         <footer className="mt-14 border-t border-zinc-800 pt-6 text-xs leading-relaxed text-zinc-600">
-          本站不托管任何影视片段，只保存对场景的结构化研究拆解；请通过正版渠道观看原片。
+          本站不托管任何影视片段；场景视频均为 YouTube 官方/公开渠道嵌入，版权归原权利方所有。
+          结构化拆解为本站原创研究内容。
         </footer>
       </div>
     </main>

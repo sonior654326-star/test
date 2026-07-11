@@ -16,6 +16,8 @@ Demo 阶段无外部依赖；Supabase / OpenAI 为可选增强（见 README 部�
 - [x] 结果页：需求理解（产品形态/核心问题/机制标签）+ 推荐场景
 - [x] 场景详情页：原始观察 / 机制拆解(14维) / 同理心视角 / 产品启发
 - [x] Supabase schema（含 query_logs 认知轨迹表、agent_outputs 预留）
+- [x] 场景视频：6 个场景嵌入 YouTube 官方预告/公开片段（youtube-nocookie，
+      带"在 YouTube 打开"兜底）；首页"开放放映室"嵌入 CC 授权的 Tears of Steel
 
 ## 待办（按优先级）
 

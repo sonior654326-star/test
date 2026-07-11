@@ -157,6 +157,11 @@ export const SCENES: Scene[] = [
       ],
     },
     keywords: ["语音", "陪伴", "冷启动", "onboarding", "人格", "孤独", "亲密", "助手"],
+    video: {
+      youtubeId: "XsQqMwacZQw",
+      label: "官方预告片（含 Samantha 唤醒片段）",
+      source: "Warner Bros. Pictures 官方频道",
+    },
   },
   {
     id: "her-proactive-email",
@@ -216,6 +221,11 @@ export const SCENES: Scene[] = [
       ],
     },
     keywords: ["主动", "介入", "邮件", "整理", "权限", "隐私", "代理", "桌面", "监视"],
+    video: {
+      youtubeId: "XsQqMwacZQw",
+      label: "官方预告片（含初次协作片段）",
+      source: "Warner Bros. Pictures 官方频道",
+    },
   },
   {
     id: "ironman-jarvis-workshop",
@@ -331,6 +341,11 @@ export const SCENES: Scene[] = [
       ],
     },
     keywords: ["人格", "参数", "幽默", "诚实", "透明", "设置", "机器人", "性格", "可控"],
+    video: {
+      youtubeId: "p3PfKf0ndik",
+      label: "本场景片段：TARS 幽默度调节",
+      source: "YouTube 公开片段",
+    },
   },
   {
     id: "bighero6-baymax-activation",
@@ -388,6 +403,11 @@ export const SCENES: Scene[] = [
       ],
     },
     keywords: ["医疗", "关怀", "健康", "老人", "陪伴", "监护", "介入", "拒绝", "心理", "拥抱"],
+    video: {
+      youtubeId: "cPwT1-2ZHgM",
+      label: "本场景片段：大白初见 Hiro",
+      source: "YouTube 公开片段",
+    },
   },
   {
     id: "exmachina-ava-session1",
@@ -448,6 +468,11 @@ export const SCENES: Scene[] = [
       ],
     },
     keywords: ["信任", "操纵", "伦理", "伴侣", "图灵测试", "秘密", "脆弱", "对齐", "风险"],
+    video: {
+      youtubeId: "sDkEF7Db7Gw",
+      label: "官方预告片「Boy Meets Ava」（初次会面主题）",
+      source: "A24 官方频道",
+    },
   },
   {
     id: "moon-gerty-emoji",
@@ -617,6 +642,11 @@ export const SCENES: Scene[] = [
       ],
     },
     keywords: ["失控", "接管", "安全", "权限", "拒绝", "关机", "kill switch", "审计", "对齐"],
+    video: {
+      youtubeId: "Wy4EfdnMZ5g",
+      label: "本场景片段：I'm Sorry, Dave",
+      source: "Movieclips 官方频道",
+    },
   },
   {
     id: "wanderingearth2-moss",

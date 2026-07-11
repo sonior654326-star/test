@@ -79,6 +79,37 @@ export default function ScenePage({
           </div>
         </header>
 
+        {/* 关联视频：官方预告/公开片段的 YouTube 嵌入，平台不托管片源 */}
+        {scene.video && (
+          <section className="mt-6">
+            <div className="overflow-hidden rounded-xl border border-zinc-800 bg-black">
+              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                <iframe
+                  className="absolute inset-0 h-full w-full"
+                  src={`https://www.youtube-nocookie.com/embed/${scene.video.youtubeId}`}
+                  title={scene.video.label}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-500">
+              <p>
+                🎬 {scene.video.label} · 来源：{scene.video.source}
+              </p>
+              <a
+                href={`https://www.youtube.com/watch?v=${scene.video.youtubeId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-teal-300/80 hover:text-teal-200"
+              >
+                无法播放？在 YouTube 打开 ↗
+              </a>
+            </div>
+          </section>
+        )}
+
         {/* 原始场景：所有视角共享的素材层 */}
         <section className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
           <p className="text-sm leading-relaxed text-zinc-300">{scene.summary}</p>

@@ -75,6 +75,18 @@ export interface AgentViews {
   applicableProducts: string[];
 }
 
+/**
+ * 场景关联视频：仅嵌入 YouTube 上官方/公开渠道的预告片或片段，
+ * 平台自身不托管任何影视文件。
+ */
+export interface SceneVideo {
+  youtubeId: string;
+  /** 视频是什么：官方预告片 / 官方片段等 */
+  label: string;
+  /** 来源频道说明 */
+  source: string;
+}
+
 /** 场景层：平台的原子单位 */
 export interface Scene {
   id: string;
@@ -91,6 +103,8 @@ export interface Scene {
   agentViews: AgentViews;
   /** 检索用关键词（中文），本地匹配的补充信号 */
   keywords: string[];
+  /** 可选：关联视频（官方预告/片段的 YouTube 嵌入） */
+  video?: SceneVideo;
 }
 
 export interface SceneWithWork extends Scene {
