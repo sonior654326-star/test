@@ -18,6 +18,9 @@ Demo 阶段无外部依赖；Supabase / OpenAI 为可选增强（见 README 部�
 - [x] Supabase schema（含 query_logs 认知轨迹表、agent_outputs 预留）
 - [x] 场景视频：6 个场景嵌入 YouTube 官方预告/公开片段（youtube-nocookie，
       带"在 YouTube 打开"兜底）；首页"开放放映室"嵌入 CC 授权的 Tears of Steel
+- [x] /analyze 上传视频拆解（Beta）：浏览器本地抽 8 帧（视频不上传服务器）→
+      /api/analyze 多模态模型产出 14 维拆解草稿 → 可复制 JSON 入库。
+      需要 OPENAI_API_KEY（gpt-4o-mini 视觉）；未配置时返回明确提示
 
 ## 待办（按优先级）
 

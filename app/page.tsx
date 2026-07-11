@@ -59,6 +59,12 @@ export default function Home() {
           </button>
         </div>
 
+        <p className="mt-3 text-sm">
+          <Link href="/analyze" className="text-teal-300/80 hover:text-teal-200">
+            或者：上传一段视频，让 AI 拆解它的交互机制 →
+          </Link>
+        </p>
+
         <div className="mt-8 space-y-2">
           <p className="text-xs text-zinc-500">试试这些问题：</p>
           {EXAMPLES.map((ex) => (
