@@ -17,8 +17,11 @@
   --radius-md: 8px;
   --radius-lg: 14px;
 
-  --font-display: "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
-  --font-body: "Lora", "Noto Serif SC", Georgia, serif;
+  /* 拉丁字母用自托管衬线体，中文用系统宋体（无需外部下载，大陆可用） */
+  --font-display: var(--font-display-latin), "Cormorant Garamond", "Songti SC",
+    "STSong", "SimSun", "Noto Serif CJK SC", "Noto Serif SC", Georgia, serif;
+  --font-body: var(--font-body-latin), "Lora", "Songti SC", "STSong", "SimSun",
+    "Noto Serif CJK SC", "Noto Serif SC", Georgia, serif;
 }
 
 @theme inline {

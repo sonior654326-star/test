@@ -1,5 +1,22 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond, Lora } from "next/font/google";
 import "./globals.css";
+
+// 字体在构建时下载、由本站自己的域名提供，不依赖 fonts.googleapis.com，
+// 中国大陆也能正常加载。中文回退到系统宋体（宋体/Songti，人人都有）。
+const display = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-display-latin",
+  display: "swap",
+});
+const body = Lora({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-body-latin",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "想象引擎 ImagineLab — 从人类想象中发现下一代 AI 产品",
@@ -13,20 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className="antialiased">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="zh-CN" className={`antialiased ${display.variable} ${body.variable}`}>
       <body className="min-h-screen flex flex-col">{children}</body>
     </html>
   );
