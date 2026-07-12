@@ -27,6 +27,16 @@ const DIMENSION_LABELS: { key: string; label: string }[] = [
   { key: "environmentRole", label: "环境角色" },
 ];
 
+const muted = (p: number) =>
+  ({ color: `color-mix(in srgb, var(--color-text) ${p}%, transparent)` }) as const;
+
+const panel = {
+  border: "1px solid var(--color-divider)",
+  borderRadius: "var(--radius-lg)",
+  background: "var(--color-surface)",
+  padding: 20,
+} as const;
+
 export default function ScenePage({
   params,
 }: {
@@ -38,12 +48,10 @@ export default function ScenePage({
 
   if (!scene) {
     return (
-      <main className="flex flex-1 items-center justify-center">
-        <div className="text-center">
-          <p className="text-zinc-400">场景不存在</p>
-          <Link href="/" className="mt-2 block text-sm text-teal-300">
-            返回首页
-          </Link>
+      <main style={{ flex: 1, display: "grid", placeItems: "center", padding: 40 }}>
+        <div style={{ textAlign: "center" }}>
+          <p style={muted(60)}>场景不存在</p>
+          <Link href="/">返回首页</Link>
         </div>
       </main>
     );
@@ -52,97 +60,144 @@ export default function ScenePage({
   const a = scene.analysis as unknown as Record<string, string>;
 
   return (
-    <main className="lab-grid flex flex-1 flex-col items-center px-6 py-12">
-      <div className="w-full max-w-2xl">
-        <Link href="/" className="font-mono text-xs text-zinc-500 hover:text-teal-300">
-          ← ImagineLab
-        </Link>
+    <div className="lab-grid">
+      <nav
+        className="nav"
+        style={{
+          maxWidth: 780,
+          margin: "0 auto",
+          paddingLeft: "clamp(20px,5vw,48px)",
+          paddingRight: "clamp(20px,5vw,48px)",
+        }}
+      >
+        <span className="nav-brand">
+          想象引擎{" "}
+          <span style={{ fontStyle: "italic", color: "var(--color-accent-700)" }}>
+            ImagineLab
+          </span>
+        </span>
+        <Link href="/">← 返回档案</Link>
+      </nav>
 
-        {/* 场景头部 */}
-        <header className="mt-6">
-          <p className="font-mono text-xs text-zinc-500">
-            《{scene.work.title}》({scene.work.originalTitle}, {scene.work.year})
-            · {scene.position}
+      <main
+        style={{
+          maxWidth: 780,
+          margin: "0 auto",
+          padding: "0 clamp(20px,5vw,48px) 80px",
+        }}
+      >
+        {/* 头部 */}
+        <header style={{ paddingTop: "clamp(36px,6vw,60px)" }}>
+          <p className="num" style={{ fontSize: 13, margin: 0, ...muted(55) }}>
+            <span style={{ fontStyle: "italic" }}>《{scene.work.title}》</span>{" "}
+            {scene.work.originalTitle} · {scene.work.year} &nbsp;·&nbsp; {scene.position}
           </p>
-          <h1 className="mt-2 text-2xl sm:text-3xl font-semibold text-zinc-50">
+          <h1
+            className="display"
+            style={{
+              fontWeight: 400,
+              fontSize: "clamp(32px,4.6vw,52px)",
+              lineHeight: 1.08,
+              margin: "12px 0 0",
+              textWrap: "balance",
+            }}
+          >
             {scene.sceneTitle}
           </h1>
-          <div className="mt-3 flex flex-wrap gap-1.5">
+          <div style={{ marginTop: 16, display: "flex", flexWrap: "wrap", gap: 7 }}>
             {scene.mechanisms.map((m) => (
-              <span
-                key={m}
-                className="rounded-full border border-teal-400/30 bg-teal-400/10 px-2.5 py-0.5 text-xs text-teal-200"
-              >
+              <span key={m} className="tag tag-outline">
                 {MECHANISM_LABELS[m]}
               </span>
             ))}
           </div>
         </header>
 
-        {/* 关联视频：官方预告/公开片段的 YouTube 嵌入，平台不托管片源 */}
+        {/* 视频 */}
         {scene.video && (
-          <section className="mt-6">
-            <div className="overflow-hidden rounded-xl border border-zinc-800 bg-black">
-              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+          <section style={{ marginTop: 28 }}>
+            <figure className="plate">
+              <div style={{ position: "relative", width: "100%", paddingBottom: "56.25%" }}>
                 <iframe
-                  className="absolute inset-0 h-full w-full"
-                  src={`https://www.youtube-nocookie.com/embed/${scene.video.youtubeId}`}
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+                  src={`https://www.youtube-nocookie.com/embed/${scene.video.youtubeId}?rel=0`}
                   title={scene.video.label}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   loading="lazy"
                 />
               </div>
-            </div>
-            <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-500">
-              <p>
-                🎬 {scene.video.label} · 来源：{scene.video.source}
-              </p>
-              <a
-                href={`https://www.youtube.com/watch?v=${scene.video.youtubeId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-teal-300/80 hover:text-teal-200"
-              >
-                无法播放？在 YouTube 打开 ↗
-              </a>
-            </div>
+            </figure>
+            <p style={{ fontSize: 12, margin: "10px 0 0", ...muted(52) }}>
+              🎬 {scene.video.label} · 来源：{scene.video.source}
+            </p>
           </section>
         )}
 
-        {/* 原始场景：所有视角共享的素材层 */}
-        <section className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
-          <p className="text-sm leading-relaxed text-zinc-300">{scene.summary}</p>
-          <div className="mt-4 grid gap-3 text-xs text-zinc-500 sm:grid-cols-2">
-            <p>
-              <span className="text-zinc-400">背景：</span>
+        {/* 原始场景 */}
+        <section style={{ ...panel, marginTop: 28 }}>
+          <p style={{ fontSize: 15, lineHeight: 1.7, margin: 0, ...muted(85) }}>
+            {scene.summary}
+          </p>
+          <div
+            style={{
+              marginTop: 16,
+              display: "grid",
+              gap: 12,
+              fontSize: 13,
+              gridTemplateColumns: "1fr",
+              ...muted(58),
+            }}
+          >
+            <p style={{ margin: 0 }}>
+              <span style={muted(45)}>背景：</span>
               {scene.context}
             </p>
-            <p>
-              <span className="text-zinc-400">AI 形态：</span>
+            <p style={{ margin: 0 }}>
+              <span style={muted(45)}>AI 形态：</span>
               {scene.aiForm}
               <br />
-              <span className="text-zinc-400">角色：</span>
+              <span style={muted(45)}>角色：</span>
               {scene.characters.join("；")}
             </p>
           </div>
         </section>
 
-        {/* 行业联想镜头：把机制翻译成对特定行业从业者的直接联想 */}
+        {/* 行业联想 */}
         {scene.industryLens && scene.industryLens.length > 0 && (
-          <section className="mt-6 rounded-xl border border-teal-400/25 bg-teal-400/[0.04] p-5">
-            <p className="font-mono text-[11px] tracking-[0.2em] text-teal-300/80 uppercase">
-              如果你在做这些，先想想 · INDUSTRY LENS
+          <section
+            style={{
+              marginTop: 24,
+              border: "1px solid var(--color-accent)",
+              background: "var(--color-accent-100)",
+              borderRadius: "var(--radius-lg)",
+              padding: 20,
+            }}
+          >
+            <p
+              className="num"
+              style={{
+                fontSize: 11,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                color: "var(--color-accent-700)",
+                margin: 0,
+              }}
+            >
+              如果你在做这些，先想想 · Industry Lens
             </p>
-            <div className="mt-4 space-y-4">
+            <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 16 }}>
               {scene.industryLens.map((l) => (
-                <div key={l.industry} className="flex flex-col gap-1.5 sm:flex-row sm:gap-4">
-                  <span className="shrink-0 sm:w-24">
-                    <span className="inline-block rounded-md border border-teal-400/30 bg-teal-400/10 px-2.5 py-1 text-xs text-teal-200">
-                      {l.industry}
-                    </span>
+                <div
+                  key={l.industry}
+                  style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "baseline" }}
+                >
+                  <span className="tag tag-outline" style={{ flexShrink: 0 }}>
+                    {l.industry}
                   </span>
-                  <p className="text-sm leading-relaxed text-zinc-200">{l.prompt}</p>
+                  <p style={{ flex: 1, minWidth: 220, margin: 0, fontSize: 14.5, lineHeight: 1.6, color: "var(--color-accent-900)" }}>
+                    {l.prompt}
+                  </p>
                 </div>
               ))}
             </div>
@@ -150,33 +205,32 @@ export default function ScenePage({
         )}
 
         {/* 认知视角切换 */}
-        <nav className="mt-8 flex gap-2 overflow-x-auto">
+        <nav style={{ marginTop: 36, display: "flex", gap: 8, overflowX: "auto" }}>
           {TABS.map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
-              className={`whitespace-nowrap rounded-full px-4 py-1.5 text-sm transition ${
-                tab === t
-                  ? "bg-teal-400/90 font-medium text-zinc-950"
-                  : "border border-zinc-700 text-zinc-400 hover:border-teal-400/40"
-              }`}
+              className={tab === t ? "btn btn-primary" : "btn btn-secondary"}
+              style={{ whiteSpace: "nowrap", fontSize: 14, padding: "8px 16px" }}
             >
               {t}
             </button>
           ))}
         </nav>
 
-        <section className="mt-5">
+        <section style={{ marginTop: 20 }}>
           {tab === "原始观察" && (
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
-              <p className="text-xs text-zinc-500">
+            <div style={panel}>
+              <p style={{ fontSize: 13, margin: 0, ...muted(55) }}>
                 先不要结论。带着这些问题，自己去看这个场景：
               </p>
-              <ul className="mt-4 space-y-4">
+              <ul style={{ margin: "16px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 16 }}>
                 {scene.agentViews.observationPrompts.map((p, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span className="font-mono text-teal-300/70">{i + 1}</span>
-                    <p className="text-sm leading-relaxed text-zinc-200">{p}</p>
+                  <li key={i} style={{ display: "flex", gap: 12 }}>
+                    <span className="num" style={{ color: "var(--color-accent-700)" }}>
+                      {i + 1}
+                    </span>
+                    <p style={{ margin: 0, fontSize: 15, lineHeight: 1.65, ...muted(88) }}>{p}</p>
                   </li>
                 ))}
               </ul>
@@ -184,15 +238,26 @@ export default function ScenePage({
           )}
 
           {tab === "机制拆解" && (
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
-              <p className="text-xs text-zinc-500">
+            <div style={panel}>
+              <p style={{ fontSize: 13, margin: 0, ...muted(55) }}>
                 从「剧情」到「机制」：这个场景里真正发生了什么。
               </p>
-              <dl className="mt-4 divide-y divide-zinc-800/80">
+              <dl style={{ margin: "16px 0 0" }}>
                 {DIMENSION_LABELS.map(({ key, label }) => (
-                  <div key={key} className="grid grid-cols-[6.5rem_1fr] gap-3 py-2.5">
-                    <dt className="text-xs text-zinc-500 pt-0.5">{label}</dt>
-                    <dd className="text-sm leading-relaxed text-zinc-300">
+                  <div
+                    key={key}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "6.5rem 1fr",
+                      gap: 12,
+                      padding: "11px 0",
+                      borderBottom: "1px solid var(--color-divider)",
+                    }}
+                  >
+                    <dt className="num" style={{ fontSize: 13, paddingTop: 1, ...muted(50) }}>
+                      {label}
+                    </dt>
+                    <dd style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, ...muted(85) }}>
                       {a[key]}
                     </dd>
                   </div>
@@ -202,35 +267,43 @@ export default function ScenePage({
           )}
 
           {tab === "同理心视角" && (
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
-              <p className="text-xs text-zinc-500">场景中的人，真正的感受和需求是什么：</p>
-              <p className="mt-4 border-l-2 border-teal-400/40 pl-4 text-sm leading-loose text-zinc-200">
+            <div style={panel}>
+              <p style={{ fontSize: 13, margin: 0, ...muted(55) }}>
+                场景中的人，真正的感受和需求是什么：
+              </p>
+              <p
+                style={{
+                  margin: "16px 0 0",
+                  borderLeft: "2px solid var(--color-accent)",
+                  paddingLeft: 16,
+                  fontSize: 16,
+                  lineHeight: 1.8,
+                  ...muted(88),
+                }}
+              >
                 {scene.agentViews.empathy}
               </p>
             </div>
           )}
 
           {tab === "产品启发" && (
-            <div className="space-y-4">
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
-                <p className="text-xs text-zinc-500">可迁移的机制：</p>
-                <ul className="mt-3 space-y-3">
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={panel}>
+                <p style={{ fontSize: 13, margin: 0, ...muted(55) }}>可迁移的机制：</p>
+                <ul style={{ margin: "12px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
                   {scene.agentViews.productInspiration.map((p, i) => (
-                    <li key={i} className="flex gap-3 text-sm leading-relaxed text-zinc-200">
-                      <span className="text-teal-300/70">→</span>
+                    <li key={i} style={{ display: "flex", gap: 12, fontSize: 15, lineHeight: 1.65, ...muted(88) }}>
+                      <span style={{ color: "var(--color-accent-700)" }}>→</span>
                       {p}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
-                <p className="text-xs text-zinc-500">可能落地的产品方向：</p>
-                <div className="mt-3 flex flex-wrap gap-2">
+              <div style={panel}>
+                <p style={{ fontSize: 13, margin: 0, ...muted(55) }}>可能落地的产品方向：</p>
+                <div style={{ marginTop: 12, display: "flex", flexWrap: "wrap", gap: 8 }}>
                   {scene.agentViews.applicableProducts.map((p) => (
-                    <span
-                      key={p}
-                      className="rounded-lg border border-zinc-700 bg-zinc-800/60 px-3 py-1.5 text-xs text-zinc-300"
-                    >
+                    <span key={p} className="tag tag-accent" style={{ fontSize: 13, padding: "5px 12px" }}>
                       {p}
                     </span>
                   ))}
@@ -240,10 +313,19 @@ export default function ScenePage({
           )}
         </section>
 
-        <footer className="mt-10 border-t border-zinc-800 pt-5 text-xs text-zinc-600">
+        <footer
+          style={{
+            marginTop: 40,
+            paddingTop: 24,
+            borderTop: "1px solid var(--color-divider)",
+            fontSize: 12.5,
+            lineHeight: 1.7,
+            ...muted(52),
+          }}
+        >
           本页为结构化研究拆解，不含影视片段；场景位置仅供你在正版渠道中查找原片。
         </footer>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

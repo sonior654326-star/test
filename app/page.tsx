@@ -2,10 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
 import { SCENES_WITH_WORK } from "@/data/scenes";
 import { MECHANISM_LABELS } from "@/lib/types";
 import { INDUSTRIES, industryCounts } from "@/lib/industries";
-import Link from "next/link";
 
 const IND_COUNTS = industryCounts();
 
@@ -16,183 +16,461 @@ const EXAMPLES = [
   "我的 Agent 拿到了很高的系统权限，失控时用户怎么接管？",
 ];
 
+const muted = (p: number) =>
+  ({ color: `color-mix(in srgb, var(--color-text) ${p}%, transparent)` }) as const;
+
 export default function Home() {
   const router = useRouter();
   const [query, setQuery] = useState("");
 
   const go = (q: string) => {
     const v = q.trim();
-    if (!v) return;
-    router.push(`/results?q=${encodeURIComponent(v)}`);
+    if (v) router.push(`/results?q=${encodeURIComponent(v)}`);
   };
 
   return (
-    <main className="lab-grid flex flex-1 flex-col items-center px-6 py-16">
-      <div className="w-full max-w-2xl">
-        <p className="font-mono text-xs tracking-[0.3em] text-teal-300/70 uppercase">
-          ImagineLab · 人机关系实验档案馆
-        </p>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-semibold leading-snug text-zinc-50">
-          你正在思考什么样的 AI 产品？
-        </h1>
-        <p className="mt-3 text-zinc-400 leading-relaxed">
-          影视已经替人类预演了大量尚未被工程实现的人机关系。输入你的问题，
-          从这些想象实验中获得交互机制与产品启发。
-        </p>
+    <div className="lab-grid">
+      <nav
+        className="nav"
+        style={{
+          maxWidth: 1000,
+          margin: "0 auto",
+          paddingLeft: "clamp(20px,5vw,48px)",
+          paddingRight: "clamp(20px,5vw,48px)",
+        }}
+      >
+        <span className="nav-brand">
+          想象引擎{" "}
+          <span style={{ fontStyle: "italic", color: "var(--color-accent-700)" }}>
+            ImagineLab
+          </span>
+        </span>
+        <a href="#archive">场景档案</a>
+        <a href="#industry">按行业</a>
+        <Link href="/analyze">上传拆解</Link>
+      </nav>
 
-        <div className="mt-8">
-          <textarea
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                go(query);
-              }
+      <main
+        style={{
+          maxWidth: 1000,
+          margin: "0 auto",
+          padding: "0 clamp(20px,5vw,48px) 80px",
+        }}
+      >
+        {/* HERO */}
+        <section style={{ paddingTop: "clamp(52px,9vw,96px)" }}>
+          <p
+            className="num"
+            style={{
+              fontSize: 12,
+              letterSpacing: "0.26em",
+              textTransform: "uppercase",
+              color: "var(--color-accent-700)",
+              margin: "0 0 22px",
             }}
-            rows={3}
-            placeholder="描述你的产品、你卡住的交互问题，或一个模糊的想法……"
-            className="w-full resize-none rounded-xl border border-zinc-700/80 bg-zinc-900/80 p-4 text-zinc-100 placeholder:text-zinc-500 focus:border-teal-400/60 focus:outline-none"
-          />
-          <button
-            onClick={() => go(query)}
-            className="mt-3 w-full rounded-xl bg-teal-400/90 py-3 font-medium text-zinc-950 transition hover:bg-teal-300 sm:w-auto sm:px-8"
           >
-            进入想象空间 →
-          </button>
-        </div>
+            ImagineLab · 人机关系实验档案馆
+          </p>
+          <h1
+            className="display"
+            style={{
+              fontWeight: 400,
+              fontSize: "clamp(40px,6vw,74px)",
+              lineHeight: 1.08,
+              letterSpacing: "-0.01em",
+              margin: 0,
+              textWrap: "balance",
+            }}
+          >
+            你正在思考
+            <br />
+            什么样的 AI 产品？
+          </h1>
+          <p
+            className="lead"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 19,
+              lineHeight: 1.7,
+              maxWidth: "52ch",
+              margin: "28px 0 0",
+              ...muted(78),
+            }}
+          >
+            影视已经替人类预演了大量尚未被工程实现的人机关系。输入你的问题，从这些想象实验中获得可迁移的交互机制与产品启发。
+          </p>
 
+          {/* composer */}
+          <div style={{ marginTop: 36, maxWidth: 680 }}>
+            <textarea
+              className="input"
+              rows={3}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  go(query);
+                }
+              }}
+              placeholder="描述你的产品、你卡住的交互问题，或一个模糊的想法……"
+              style={{ fontSize: 16, lineHeight: 1.6 }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 12,
+                alignItems: "center",
+                marginTop: 16,
+              }}
+            >
+              <button className="btn btn-primary" onClick={() => go(query)}>
+                进入想象空间 →
+              </button>
+              <Link href="/analyze" className="btn btn-ghost">
+                或上传一段视频，让 AI 拆解它的交互机制 →
+              </Link>
+            </div>
+          </div>
+
+          {/* examples */}
+          <div style={{ marginTop: 40, maxWidth: 720 }}>
+            <p
+              style={{
+                fontSize: 12,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                margin: "0 0 14px",
+                ...muted(55),
+              }}
+            >
+              试试这些问题
+            </p>
+            <div
+              style={{
+                display: "grid",
+                gap: 1,
+                background: "var(--color-divider)",
+                border: "1px solid var(--color-divider)",
+                borderRadius: "var(--radius-md)",
+                overflow: "hidden",
+              }}
+            >
+              {EXAMPLES.map((ex) => (
+                <button
+                  key={ex}
+                  onClick={() => go(ex)}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    textAlign: "left",
+                    background: "var(--color-bg)",
+                    border: 0,
+                    cursor: "pointer",
+                    padding: "14px 18px",
+                    font: "inherit",
+                    fontSize: 15,
+                    lineHeight: 1.5,
+                    ...muted(82),
+                  }}
+                >
+                  {ex}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <hr className="hr" style={{ margin: "68px 0" }} />
+
+        {/* FEATURED DEEP DIVE */}
         <Link
           href="/deep/baymax"
-          className="mt-6 block rounded-xl border border-teal-400/30 bg-teal-400/[0.06] p-4 transition hover:border-teal-400/60"
+          className="card"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr auto",
+            gap: 28,
+            alignItems: "center",
+            borderColor: "var(--color-accent)",
+            background: "var(--color-accent-100)",
+            padding: "clamp(24px,4vw,40px)",
+            textDecoration: "none",
+            color: "inherit",
+          }}
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-teal-300/80">
-            单素材深挖 · 样板
-          </p>
-          <p className="mt-1.5 font-medium text-zinc-100">
-            大白：一个素材，挖到极限 →
-          </p>
-          <p className="mt-1 text-xs text-zinc-400">
-            视频站内直看 · 逐拍 / 机制 / 八视角 / 迁移 / 反事实 / 能力缺口 六层深挖
-          </p>
+          <div>
+            <p
+              className="num"
+              style={{
+                fontSize: 11,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                color: "var(--color-accent-700)",
+                margin: "0 0 12px",
+              }}
+            >
+              单素材深挖 · 样板
+            </p>
+            <h2
+              className="display"
+              style={{
+                fontWeight: 400,
+                fontSize: "clamp(28px,3.4vw,40px)",
+                lineHeight: 1.1,
+                margin: 0,
+                color: "var(--color-accent-900)",
+              }}
+            >
+              大白：一个素材，挖到极限
+            </h2>
+            <p
+              style={{
+                fontSize: 15,
+                lineHeight: 1.65,
+                color: "var(--color-accent-800)",
+                margin: "14px 0 0",
+                maxWidth: "60ch",
+              }}
+            >
+              视频站内直看 · 逐拍时间线 / 机制全解剖 / 八视角对读 / 跨行业迁移 /
+              反事实推演 / 能力缺口 —— 六层深挖，深度才是抄不走的壁垒。
+            </p>
+          </div>
+          <span
+            className="btn btn-secondary"
+            style={{ whiteSpace: "nowrap", borderColor: "var(--color-accent-700)" }}
+          >
+            开始阅读 →
+          </span>
         </Link>
 
-        <p className="mt-3 text-sm">
-          <Link href="/analyze" className="text-teal-300/80 hover:text-teal-200">
-            或者：上传一段视频，让 AI 拆解它的交互机制 →
-          </Link>
-        </p>
-
-        <div className="mt-8 space-y-2">
-          <p className="text-xs text-zinc-500">试试这些问题：</p>
-          {EXAMPLES.map((ex) => (
-            <button
-              key={ex}
-              onClick={() => go(ex)}
-              className="block w-full rounded-lg border border-zinc-800 bg-zinc-900/40 px-4 py-2.5 text-left text-sm text-zinc-400 transition hover:border-teal-400/40 hover:text-zinc-200"
+        {/* INDUSTRY */}
+        <section id="industry" style={{ marginTop: 80, scrollMarginTop: 24 }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+              gap: 16,
+            }}
+          >
+            <h2 style={{ fontWeight: 600, fontSize: "clamp(26px,3vw,34px)", margin: 0 }}>
+              按行业进入
+            </h2>
+            <span
+              className="num"
+              style={{
+                fontSize: 11,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                ...muted(45),
+              }}
             >
-              {ex}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-14 border-t border-zinc-800 pt-8">
-          <div className="flex items-baseline justify-between">
-            <h2 className="text-sm font-medium text-zinc-300">按行业进入</h2>
-            <p className="font-mono text-[10px] text-zinc-600">FIND WHAT SPARKS YOU</p>
+              Find what sparks you
+            </span>
           </div>
-          <p className="mt-1 text-xs text-zinc-500">
+          <p style={{ fontSize: 15, margin: "8px 0 0", ...muted(62) }}>
             你在做哪类 AI？直接看最能启发你的素材。
           </p>
-          <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+          <hr className="hr" style={{ margin: "20px 0 28px" }} />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))",
+              gap: 16,
+            }}
+          >
             {INDUSTRIES.map((ind) => (
               <Link
                 key={ind.slug}
                 href={`/industry/${ind.slug}`}
-                className="group flex items-center justify-between rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-3 transition hover:border-teal-400/40"
+                className="card"
+                style={{ textDecoration: "none", color: "inherit" }}
               >
-                <div>
-                  <p className="font-medium text-zinc-200 group-hover:text-teal-200">
-                    {ind.name}
-                  </p>
-                  <p className="mt-0.5 line-clamp-1 text-[11px] text-zinc-500">
-                    {ind.blurb}
-                  </p>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "baseline",
+                    justifyContent: "space-between",
+                    gap: 10,
+                  }}
+                >
+                  <span className="card-title">{ind.name}</span>
+                  <span
+                    className="num"
+                    style={{ fontSize: 13, color: "var(--color-accent-700)" }}
+                  >
+                    {IND_COUNTS[ind.slug]} →
+                  </span>
                 </div>
-                <span className="ml-3 shrink-0 font-mono text-xs text-teal-300/70">
-                  {IND_COUNTS[ind.slug]} →
-                </span>
+                <p className="card-body" style={{ fontSize: 13 }}>
+                  {ind.blurb}
+                </p>
               </Link>
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="mt-14 border-t border-zinc-800 pt-8">
-          <div className="flex items-baseline justify-between">
-            <h2 className="text-sm font-medium text-zinc-300">
-              场景档案 · {SCENES_WITH_WORK.length} 条
+        {/* SCENE ARCHIVE */}
+        <section id="archive" style={{ marginTop: 80, scrollMarginTop: 24 }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+              gap: 16,
+            }}
+          >
+            <h2 style={{ fontWeight: 600, fontSize: "clamp(26px,3vw,34px)", margin: 0 }}>
+              场景档案{" "}
+              <span
+                className="num"
+                style={{ fontWeight: 400, color: "var(--color-accent-700)" }}
+              >
+                · {SCENES_WITH_WORK.length} 条
+              </span>
             </h2>
-            <p className="font-mono text-[10px] text-zinc-600">
-              STRUCTURED HUMAN-AI SCENE ARCHIVE
-            </p>
+            <span
+              style={{
+                fontSize: 11,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                ...muted(45),
+              }}
+            >
+              Structured human-AI scene archive
+            </span>
           </div>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {SCENES_WITH_WORK.map((s) => (
+          <hr className="hr" style={{ margin: "20px 0 4px" }} />
+
+          <div>
+            {SCENES_WITH_WORK.map((s, i) => (
               <Link
                 key={s.id}
                 href={`/scene/${s.id}`}
-                className="group rounded-xl border border-zinc-800 bg-zinc-900/40 p-4 transition hover:border-teal-400/40"
+                className="scene-row"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "2.6rem 1fr auto",
+                  gap: 20,
+                  alignItems: "baseline",
+                  padding: "20px 12px",
+                  borderBottom: "1px solid var(--color-divider)",
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
               >
-                <p className="font-mono text-[10px] text-zinc-500">
-                  《{s.work.title}》 {s.work.year}
-                  {s.video && <span className="ml-1.5 text-teal-300/80">🎬 可看片段</span>}
-                </p>
-                <p className="mt-1 font-medium text-zinc-200 group-hover:text-teal-200">
-                  {s.sceneTitle}
-                </p>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {s.mechanisms.slice(0, 3).map((m) => (
-                    <span
-                      key={m}
-                      className="rounded-full border border-zinc-700 px-2 py-0.5 text-[10px] text-zinc-400"
-                    >
-                      {MECHANISM_LABELS[m]}
-                    </span>
-                  ))}
+                <span
+                  className="num"
+                  style={{ fontSize: 15, color: "var(--color-accent-700)" }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <p
+                    className="num"
+                    style={{
+                      fontSize: 12,
+                      letterSpacing: "0.04em",
+                      margin: 0,
+                      ...muted(52),
+                    }}
+                  >
+                    <span style={{ fontStyle: "italic" }}>《{s.work.title}》</span>{" "}
+                    {s.work.originalTitle} · {s.work.year}
+                    {s.video && (
+                      <>
+                        {" "}
+                        <span
+                          className="tag tag-outline"
+                          style={{ fontSize: 10, padding: "1px 7px" }}
+                        >
+                          片段
+                        </span>
+                      </>
+                    )}
+                  </p>
+                  <p
+                    className="serif"
+                    style={{
+                      fontWeight: 600,
+                      fontSize: 22,
+                      lineHeight: 1.2,
+                      margin: "6px 0 10px",
+                    }}
+                  >
+                    {s.sceneTitle}
+                  </p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
+                    {s.mechanisms.slice(0, 3).map((m) => (
+                      <span key={m} className="tag tag-neutral">
+                        {MECHANISM_LABELS[m]}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+                <span style={{ color: "var(--color-accent)", fontSize: 18 }}>→</span>
               </Link>
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="mt-14 border-t border-zinc-800 pt-8">
-          <div className="flex items-baseline justify-between">
-            <h2 className="text-sm font-medium text-zinc-300">开放放映室</h2>
-            <p className="font-mono text-[10px] text-zinc-600">OPEN LICENSE SCREENING</p>
+        {/* OPEN SCREENING */}
+        <section id="screening" style={{ marginTop: 80, scrollMarginTop: 24 }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+              gap: 16,
+            }}
+          >
+            <h2 style={{ fontWeight: 600, fontSize: "clamp(26px,3vw,34px)", margin: 0 }}>
+              开放放映室
+            </h2>
+            <span
+              style={{
+                fontSize: 11,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                ...muted(45),
+              }}
+            >
+              Open license screening
+            </span>
           </div>
-          <p className="mt-2 text-xs text-zinc-500">
-            《Tears of Steel》—— Blender 基金会的开源科幻短片（CC-BY 授权，可自由观看）：
-            人类与失控机器人的战争，源于一段关于机器人的记忆重演实验。
+          <p style={{ fontSize: 15, lineHeight: 1.65, margin: "10px 0 0", maxWidth: "64ch", ...muted(68) }}>
+            《Tears of Steel》—— Blender 基金会的开源科幻短片（CC-BY 授权，可自由观看）：人类与失控机器人的战争，源于一段关于机器人的记忆重演实验。
           </p>
-          <div className="mt-3 overflow-hidden rounded-xl border border-zinc-800 bg-black">
-            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+          <figure className="plate" style={{ marginTop: 24 }}>
+            <div style={{ position: "relative", width: "100%", paddingBottom: "56.25%" }}>
               <iframe
-                className="absolute inset-0 h-full w-full"
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
                 src="https://www.youtube-nocookie.com/embed/R6MlUcmOul8"
-                title="Tears of Steel - Blender VFX Open Movie"
+                title="Tears of Steel — Blender VFX Open Movie"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 loading="lazy"
               />
             </div>
-          </div>
-        </div>
+          </figure>
+        </section>
 
-        <footer className="mt-14 border-t border-zinc-800 pt-6 text-xs leading-relaxed text-zinc-600">
-          本站不托管任何影视片段；场景视频均为 YouTube 官方/公开渠道嵌入，版权归原权利方所有。
-          结构化拆解为本站原创研究内容。
+        <footer
+          style={{
+            marginTop: 72,
+            paddingTop: 28,
+            borderTop: "1px solid var(--color-divider)",
+            fontSize: 12.5,
+            lineHeight: 1.7,
+            ...muted(52),
+          }}
+        >
+          本站不托管任何影视片段；场景视频均为 YouTube 官方 / 公开渠道嵌入，版权归原权利方所有。结构化拆解为本站原创研究内容。
         </footer>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

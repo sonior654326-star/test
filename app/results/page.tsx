@@ -6,6 +6,26 @@ import { Suspense, useEffect, useState } from "react";
 import type { MatchResponse } from "@/lib/types";
 import { MECHANISM_LABELS } from "@/lib/types";
 
+const muted = (p: number) =>
+  ({ color: `color-mix(in srgb, var(--color-text) ${p}%, transparent)` }) as const;
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p
+      className="num"
+      style={{
+        fontSize: 12,
+        letterSpacing: "0.22em",
+        textTransform: "uppercase",
+        color: "var(--color-accent-700)",
+        margin: 0,
+      }}
+    >
+      {children}
+    </p>
+  );
+}
+
 function ResultsInner() {
   const params = useSearchParams();
   const q = params.get("q") ?? "";
@@ -31,64 +51,98 @@ function ResultsInner() {
         if (!cancelled) setState({ q, data: d });
       })
       .catch(() => {
-        if (!cancelled)
-          setState({ q, error: "匹配服务暂时不可用，请稍后重试。" });
+        if (!cancelled) setState({ q, error: "匹配服务暂时不可用，请稍后重试。" });
       });
     return () => {
       cancelled = true;
     };
   }, [q]);
 
-  // 只展示与当前查询对应的结果；查询变化期间视为加载中
   const data = state.q === q ? state.data : undefined;
   const error = state.q === q ? state.error : undefined;
 
   return (
-    <main className="lab-grid flex flex-1 flex-col items-center px-6 py-12">
-      <div className="w-full max-w-2xl">
-        <Link href="/" className="font-mono text-xs text-zinc-500 hover:text-teal-300">
-          ← ImagineLab
-        </Link>
+    <div className="lab-grid">
+      <nav
+        className="nav"
+        style={{
+          maxWidth: 780,
+          margin: "0 auto",
+          paddingLeft: "clamp(20px,5vw,48px)",
+          paddingRight: "clamp(20px,5vw,48px)",
+        }}
+      >
+        <span className="nav-brand">
+          想象引擎{" "}
+          <span style={{ fontStyle: "italic", color: "var(--color-accent-700)" }}>
+            ImagineLab
+          </span>
+        </span>
+        <Link href="/">← 返回档案</Link>
+      </nav>
 
-        <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
-          <p className="text-xs text-zinc-500">你的问题</p>
-          <p className="mt-1 text-zinc-100">{q || "（空）"}</p>
+      <main
+        style={{
+          maxWidth: 780,
+          margin: "0 auto",
+          padding: "clamp(32px,5vw,52px) clamp(20px,5vw,48px) 80px",
+        }}
+      >
+        <div
+          style={{
+            border: "1px solid var(--color-divider)",
+            borderRadius: "var(--radius-lg)",
+            background: "var(--color-surface)",
+            padding: 18,
+          }}
+        >
+          <p style={{ fontSize: 12, margin: 0, ...muted(52) }}>你的问题</p>
+          <p style={{ fontSize: 17, lineHeight: 1.6, margin: "6px 0 0" }}>
+            {q || "（空）"}
+          </p>
         </div>
 
-        {error && <p className="mt-8 text-sm text-red-400">{error}</p>}
+        {error && (
+          <p style={{ marginTop: 32, fontSize: 14, color: "#b23b3b" }}>{error}</p>
+        )}
         {!data && !error && (
-          <p className="mt-8 animate-pulse text-sm text-zinc-500">
+          <p style={{ marginTop: 32, fontSize: 14, ...muted(50) }}>
             正在匹配人类想象档案……
           </p>
         )}
 
         {data && (
           <>
-            <section className="mt-8">
-              <h2 className="font-mono text-xs tracking-[0.25em] text-teal-300/70 uppercase">
-                系统对需求的理解
-              </h2>
-              <div className="mt-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
-                <p className="text-sm text-zinc-400">
+            <section style={{ marginTop: 40 }}>
+              <SectionLabel>系统对需求的理解</SectionLabel>
+              <div
+                style={{
+                  marginTop: 14,
+                  border: "1px solid var(--color-divider)",
+                  borderRadius: "var(--radius-lg)",
+                  background: "var(--color-surface)",
+                  padding: 18,
+                }}
+              >
+                <p style={{ fontSize: 14, margin: 0, ...muted(60) }}>
                   产品形态：
-                  <span className="text-zinc-200">{data.understanding.productForm}</span>
+                  <span style={{ color: "var(--color-text)" }}>
+                    {data.understanding.productForm}
+                  </span>
                 </p>
                 {data.understanding.matchedMechanisms.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-1.5">
+                  <div style={{ marginTop: 14, display: "flex", flexWrap: "wrap", gap: 7 }}>
                     {data.understanding.matchedMechanisms.map((m) => (
-                      <span
-                        key={m}
-                        className="rounded-full border border-teal-400/30 bg-teal-400/10 px-2.5 py-0.5 text-xs text-teal-200"
-                      >
+                      <span key={m} className="tag tag-outline">
                         {MECHANISM_LABELS[m]}
                       </span>
                     ))}
                   </div>
                 )}
-                <ul className="mt-4 space-y-2">
+                <ul style={{ margin: "18px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
                   {data.understanding.coreQuestions.map((cq) => (
-                    <li key={cq} className="flex gap-2 text-sm text-zinc-300">
-                      <span className="text-teal-300/70">?</span>
+                    <li key={cq} style={{ display: "flex", gap: 10, fontSize: 15, lineHeight: 1.6, ...muted(85) }}>
+                      <span style={{ color: "var(--color-accent-700)" }}>?</span>
                       {cq}
                     </li>
                   ))}
@@ -96,43 +150,54 @@ function ResultsInner() {
               </div>
             </section>
 
-            <section className="mt-8">
-              <h2 className="font-mono text-xs tracking-[0.25em] text-teal-300/70 uppercase">
-                推荐的想象场景
-              </h2>
-              <div className="mt-3 space-y-3">
+            <section style={{ marginTop: 40 }}>
+              <SectionLabel>推荐的想象场景</SectionLabel>
+              <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 14 }}>
                 {data.results.map(({ scene, reason }) => (
                   <Link
                     key={scene.id}
                     href={`/scene/${scene.id}?q=${encodeURIComponent(q)}`}
-                    className="group block rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 transition hover:border-teal-400/40"
+                    className="card"
+                    style={{ textDecoration: "none", color: "inherit" }}
                   >
-                    <p className="font-mono text-[10px] text-zinc-500">
-                      《{scene.work.title}》({scene.work.originalTitle},{" "}
-                      {scene.work.year})
+                    <p className="num" style={{ fontSize: 12, margin: 0, ...muted(52) }}>
+                      <span style={{ fontStyle: "italic" }}>《{scene.work.title}》</span>{" "}
+                      {scene.work.originalTitle} · {scene.work.year}
                     </p>
-                    <p className="mt-1 text-lg font-medium text-zinc-100 group-hover:text-teal-200">
+                    <p
+                      className="serif"
+                      style={{ fontWeight: 600, fontSize: 21, lineHeight: 1.2, margin: "6px 0 8px" }}
+                    >
                       {scene.sceneTitle}
                     </p>
-                    <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+                    <p style={{ fontSize: 14.5, lineHeight: 1.65, margin: 0, ...muted(70) }}>
                       {scene.summary}
                     </p>
-                    <p className="mt-3 border-l-2 border-teal-400/40 pl-3 text-xs text-teal-200/80">
+                    <p
+                      style={{
+                        margin: "14px 0 0",
+                        borderLeft: "2px solid var(--color-accent)",
+                        paddingLeft: 12,
+                        fontSize: 13,
+                        lineHeight: 1.55,
+                        color: "var(--color-accent-800)",
+                      }}
+                    >
                       {reason}
                     </p>
                   </Link>
                 ))}
               </div>
-              <p className="mt-4 font-mono text-[10px] text-zinc-600">
+              <p className="num" style={{ marginTop: 16, fontSize: 11, ...muted(40) }}>
                 {data.llmEnhanced
-                  ? "MATCHING: LLM-ENHANCED"
-                  : "MATCHING: LOCAL STRUCTURAL INDEX"}
+                  ? "MATCHING · LLM-ENHANCED"
+                  : "MATCHING · LOCAL STRUCTURAL INDEX"}
               </p>
             </section>
           </>
         )}
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
 

@@ -9,6 +9,9 @@ import { MECHANISM_LABELS, type MechanismTag } from "@/lib/types";
 const FRAME_COUNT = 8;
 const FRAME_WIDTH = 480;
 
+const muted = (p: number) =>
+  ({ color: `color-mix(in srgb, var(--color-text) ${p}%, transparent)` }) as const;
+
 interface Draft {
   sceneTitle?: string;
   summary?: string;
@@ -139,76 +142,132 @@ export default function AnalyzePage() {
     if (draft) navigator.clipboard.writeText(JSON.stringify(draft, null, 2));
   };
 
-  return (
-    <main className="lab-grid flex flex-1 flex-col items-center px-6 py-12">
-      <div className="w-full max-w-2xl">
-        <Link href="/" className="font-mono text-xs text-zinc-500 hover:text-teal-300">
-          ← ImagineLab
-        </Link>
+  const panel = {
+    border: "1px solid var(--color-divider)",
+    borderRadius: "var(--radius-lg)",
+    background: "var(--color-surface)",
+    padding: 20,
+  } as const;
 
-        <h1 className="mt-6 text-2xl sm:text-3xl font-semibold text-zinc-50">
-          上传视频，拆解机制 <span className="text-sm font-normal text-teal-300/80">Beta</span>
+  return (
+    <div className="lab-grid">
+      <nav
+        className="nav"
+        style={{
+          maxWidth: 780,
+          margin: "0 auto",
+          paddingLeft: "clamp(20px,5vw,48px)",
+          paddingRight: "clamp(20px,5vw,48px)",
+        }}
+      >
+        <span className="nav-brand">
+          想象引擎{" "}
+          <span style={{ fontStyle: "italic", color: "var(--color-accent-700)" }}>
+            ImagineLab
+          </span>
+        </span>
+        <Link href="/">← 返回档案</Link>
+      </nav>
+
+      <main
+        style={{
+          maxWidth: 780,
+          margin: "0 auto",
+          padding: "clamp(32px,5vw,52px) clamp(20px,5vw,48px) 80px",
+        }}
+      >
+        <h1
+          className="display"
+          style={{
+            fontWeight: 400,
+            fontSize: "clamp(30px,4.4vw,48px)",
+            lineHeight: 1.08,
+            margin: 0,
+          }}
+        >
+          上传视频，拆解机制{" "}
+          <span style={{ fontSize: 15, color: "var(--color-accent-700)" }}>Beta</span>
         </h1>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-          上传一段人机交互场景的视频（影视片段、产品 demo、机器人视频……），
-          AI 将生成 14 维机制拆解草稿。
-          <span className="text-zinc-500">
+        <p style={{ fontSize: 16, lineHeight: 1.7, margin: "16px 0 0", ...muted(75) }}>
+          上传一段人机交互场景的视频（影视片段、产品 demo、机器人视频……），AI
+          将生成 14 维机制拆解草稿。
+          <span style={muted(55)}>
+            {" "}
             视频只在你的浏览器里处理，不会上传到服务器——发送给模型的只有 {FRAME_COUNT} 张关键帧。
           </span>
         </p>
 
         {/* 上传区 */}
         <div
-          className="mt-6 cursor-pointer rounded-xl border border-dashed border-zinc-700 bg-zinc-900/40 p-8 text-center transition hover:border-teal-400/50"
           onClick={() => inputRef.current?.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => {
             e.preventDefault();
             onFile(e.dataTransfer.files?.[0]);
           }}
+          style={{
+            marginTop: 24,
+            cursor: "pointer",
+            border: "1px dashed var(--color-accent)",
+            borderRadius: "var(--radius-lg)",
+            background: "var(--color-accent-100)",
+            padding: 32,
+            textAlign: "center",
+          }}
         >
           <input
             ref={inputRef}
             type="file"
             accept="video/*"
-            className="hidden"
+            style={{ display: "none" }}
             onChange={(e) => onFile(e.target.files?.[0] ?? undefined)}
           />
-          <p className="text-zinc-300">
+          <p className="serif" style={{ fontSize: 18, fontWeight: 600, margin: 0, color: "var(--color-accent-900)" }}>
             {fileName ? `已选择：${fileName}` : "点击选择或拖入视频文件"}
           </p>
-          <p className="mt-1 text-xs text-zinc-500">推荐 mp4/webm，几十秒到几分钟的片段效果最好</p>
+          <p style={{ fontSize: 12.5, margin: "6px 0 0", color: "var(--color-accent-800)" }}>
+            推荐 mp4/webm，几十秒到几分钟的片段效果最好
+          </p>
         </div>
 
         {phase === "extracting" && (
-          <p className="mt-4 animate-pulse text-sm text-zinc-500">正在本地抽取关键帧……</p>
+          <p style={{ marginTop: 16, fontSize: 14, ...muted(50) }}>正在本地抽取关键帧……</p>
         )}
 
         {/* 帧预览 */}
         {frames.length > 0 && (
           <>
-            <div className="mt-5 grid grid-cols-4 gap-2">
+            <div
+              style={{
+                marginTop: 20,
+                display: "grid",
+                gridTemplateColumns: "repeat(4,1fr)",
+                gap: 8,
+              }}
+            >
               {frames.map((f, i) => (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   key={i}
                   src={f}
                   alt={`帧 ${i + 1}`}
-                  className="rounded-md border border-zinc-800"
+                  style={{ width: "100%", borderRadius: 8, border: "1px solid var(--color-divider)" }}
                 />
               ))}
             </div>
             <textarea
+              className="input"
               value={context}
               onChange={(e) => setContext(e.target.value)}
               rows={2}
               placeholder="（可选）背景说明：出自什么作品/产品？场景里发生了什么？"
-              className="mt-4 w-full resize-none rounded-xl border border-zinc-700/80 bg-zinc-900/80 p-3 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-teal-400/60 focus:outline-none"
+              style={{ marginTop: 16, fontSize: 14 }}
             />
             <button
               onClick={analyze}
               disabled={phase === "analyzing"}
-              className="mt-3 w-full rounded-xl bg-teal-400/90 py-3 font-medium text-zinc-950 transition hover:bg-teal-300 disabled:opacity-50 sm:w-auto sm:px-8"
+              className="btn btn-primary"
+              style={{ marginTop: 14, opacity: phase === "analyzing" ? 0.5 : 1 }}
             >
               {phase === "analyzing" ? "分析中（约 20-40 秒）……" : "开始机制拆解 →"}
             </button>
@@ -216,40 +275,62 @@ export default function AnalyzePage() {
         )}
 
         {error && (
-          <p className="mt-4 whitespace-pre-wrap rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">
+          <p
+            style={{
+              marginTop: 16,
+              whiteSpace: "pre-wrap",
+              borderRadius: "var(--radius-md)",
+              border: "1px solid #d9a3a3",
+              background: "#f6e9e6",
+              padding: 12,
+              fontSize: 14,
+              color: "#8a3030",
+            }}
+          >
             {error}
           </p>
         )}
 
         {/* 拆解结果 */}
         {draft && (
-          <section className="mt-10">
-            <div className="flex items-center justify-between">
-              <h2 className="font-mono text-xs tracking-[0.25em] text-teal-300/70 uppercase">
+          <section style={{ marginTop: 40 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <p
+                className="num"
+                style={{
+                  fontSize: 12,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  color: "var(--color-accent-700)",
+                  margin: 0,
+                }}
+              >
                 拆解草稿
-              </h2>
+              </p>
               <button
                 onClick={copyJson}
-                className="rounded-lg border border-zinc-700 px-3 py-1 text-xs text-zinc-400 transition hover:border-teal-400/40 hover:text-teal-200"
+                className="btn btn-secondary"
+                style={{ fontSize: 12, padding: "6px 14px" }}
               >
                 复制 JSON
               </button>
             </div>
 
-            <div className="mt-3 rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
-              <h3 className="text-xl font-semibold text-zinc-50">
+            <div style={{ ...panel, marginTop: 14 }}>
+              <h3 className="serif" style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>
                 {draft.sceneTitle || "未命名场景"}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-300">{draft.summary}</p>
+              <p style={{ fontSize: 15, lineHeight: 1.7, margin: "10px 0 0", ...muted(82) }}>
+                {draft.summary}
+              </p>
               {draft.aiForm && (
-                <p className="mt-2 text-xs text-zinc-500">AI 形态：{draft.aiForm}</p>
+                <p style={{ fontSize: 13, margin: "8px 0 0", ...muted(52) }}>
+                  AI 形态：{draft.aiForm}
+                </p>
               )}
-              <div className="mt-3 flex flex-wrap gap-1.5">
+              <div style={{ marginTop: 12, display: "flex", flexWrap: "wrap", gap: 7 }}>
                 {(draft.mechanisms ?? []).map((m) => (
-                  <span
-                    key={m}
-                    className="rounded-full border border-teal-400/30 bg-teal-400/10 px-2.5 py-0.5 text-xs text-teal-200"
-                  >
+                  <span key={m} className="tag tag-outline">
                     {MECHANISM_LABELS[m as MechanismTag] ?? m}
                   </span>
                 ))}
@@ -257,14 +338,25 @@ export default function AnalyzePage() {
             </div>
 
             {draft.analysis && (
-              <div className="mt-4 rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
-                <p className="text-xs text-zinc-500">14 维机制拆解</p>
-                <dl className="mt-3 divide-y divide-zinc-800/80">
+              <div style={{ ...panel, marginTop: 16 }}>
+                <p style={{ fontSize: 13, margin: 0, ...muted(55) }}>14 维机制拆解</p>
+                <dl style={{ margin: "12px 0 0" }}>
                   {DIMENSION_LABELS.filter(({ key }) => draft.analysis?.[key]).map(
                     ({ key, label }) => (
-                      <div key={key} className="grid grid-cols-[6.5rem_1fr] gap-3 py-2.5">
-                        <dt className="pt-0.5 text-xs text-zinc-500">{label}</dt>
-                        <dd className="text-sm leading-relaxed text-zinc-300">
+                      <div
+                        key={key}
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "6.5rem 1fr",
+                          gap: 12,
+                          padding: "10px 0",
+                          borderBottom: "1px solid var(--color-divider)",
+                        }}
+                      >
+                        <dt className="num" style={{ fontSize: 13, paddingTop: 1, ...muted(50) }}>
+                          {label}
+                        </dt>
+                        <dd style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, ...muted(85) }}>
                           {draft.analysis![key]}
                         </dd>
                       </div>
@@ -275,14 +367,18 @@ export default function AnalyzePage() {
             )}
 
             {draft.agentViews && (
-              <div className="mt-4 space-y-4">
+              <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 16 }}>
                 {!!draft.agentViews.observationPrompts?.length && (
-                  <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
-                    <p className="text-xs text-zinc-500">原始观察（自己去看的问题）</p>
-                    <ul className="mt-3 space-y-3">
+                  <div style={panel}>
+                    <p style={{ fontSize: 13, margin: 0, ...muted(55) }}>
+                      原始观察（自己去看的问题）
+                    </p>
+                    <ul style={{ margin: "12px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
                       {draft.agentViews.observationPrompts.map((p, i) => (
-                        <li key={i} className="flex gap-3 text-sm leading-relaxed text-zinc-200">
-                          <span className="font-mono text-teal-300/70">{i + 1}</span>
+                        <li key={i} style={{ display: "flex", gap: 12, fontSize: 15, lineHeight: 1.65, ...muted(85) }}>
+                          <span className="num" style={{ color: "var(--color-accent-700)" }}>
+                            {i + 1}
+                          </span>
                           {p}
                         </li>
                       ))}
@@ -290,31 +386,37 @@ export default function AnalyzePage() {
                   </div>
                 )}
                 {draft.agentViews.empathy && (
-                  <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
-                    <p className="text-xs text-zinc-500">同理心视角</p>
-                    <p className="mt-3 border-l-2 border-teal-400/40 pl-4 text-sm leading-loose text-zinc-200">
+                  <div style={panel}>
+                    <p style={{ fontSize: 13, margin: 0, ...muted(55) }}>同理心视角</p>
+                    <p
+                      style={{
+                        margin: "12px 0 0",
+                        borderLeft: "2px solid var(--color-accent)",
+                        paddingLeft: 16,
+                        fontSize: 15.5,
+                        lineHeight: 1.75,
+                        ...muted(85),
+                      }}
+                    >
                       {draft.agentViews.empathy}
                     </p>
                   </div>
                 )}
                 {!!draft.agentViews.productInspiration?.length && (
-                  <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
-                    <p className="text-xs text-zinc-500">产品启发</p>
-                    <ul className="mt-3 space-y-3">
+                  <div style={panel}>
+                    <p style={{ fontSize: 13, margin: 0, ...muted(55) }}>产品启发</p>
+                    <ul style={{ margin: "12px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
                       {draft.agentViews.productInspiration.map((p, i) => (
-                        <li key={i} className="flex gap-3 text-sm leading-relaxed text-zinc-200">
-                          <span className="text-teal-300/70">→</span>
+                        <li key={i} style={{ display: "flex", gap: 12, fontSize: 15, lineHeight: 1.65, ...muted(85) }}>
+                          <span style={{ color: "var(--color-accent-700)" }}>→</span>
                           {p}
                         </li>
                       ))}
                     </ul>
                     {!!draft.agentViews.applicableProducts?.length && (
-                      <div className="mt-4 flex flex-wrap gap-2">
+                      <div style={{ marginTop: 16, display: "flex", flexWrap: "wrap", gap: 8 }}>
                         {draft.agentViews.applicableProducts.map((p) => (
-                          <span
-                            key={p}
-                            className="rounded-lg border border-zinc-700 bg-zinc-800/60 px-3 py-1.5 text-xs text-zinc-300"
-                          >
+                          <span key={p} className="tag tag-accent" style={{ fontSize: 13, padding: "5px 12px" }}>
                             {p}
                           </span>
                         ))}
@@ -325,13 +427,12 @@ export default function AnalyzePage() {
               </div>
             )}
 
-            <p className="mt-4 text-xs leading-relaxed text-zinc-600">
-              这是 AI 草稿：入库前请人工校对（判断标准见 DATA.md）。
-              上传的视频未被存储；仅关键帧被发送给模型用于本次分析。
+            <p style={{ marginTop: 16, fontSize: 12.5, lineHeight: 1.7, ...muted(50) }}>
+              这是 AI 草稿：入库前请人工校对（判断标准见 DATA.md）。上传的视频未被存储；仅关键帧被发送给模型用于本次分析。
             </p>
           </section>
         )}
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
