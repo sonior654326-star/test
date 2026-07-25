@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { localMatch } from "@/lib/match";
 import { SCENES_WITH_WORK } from "@/data/scenes";
 import type { MatchResponse } from "@/lib/types";
+import { clientIp, rateLimit } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
 
@@ -10,6 +11,11 @@ export const runtime = "nodejs";
 // LLM 调用失败一律静默回退到本地结果，保证接口永远可用。
 
 export async function POST(req: Request) {
+  // 防滥用：每 IP 每分钟 10 次（本地匹配便宜，宽松些）
+  if (!rateLimit(`mt:${clientIp(req)}`, 10, 60_000)) {
+    return NextResponse.json({ error: "请求太频繁，请稍后再试" }, { status: 429 });
+  }
+
   let query = "";
   try {
     const body = await req.json();

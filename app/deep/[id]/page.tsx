@@ -258,6 +258,14 @@ export default function DeepDivePage({
             >
               信任与情绪几乎同步爬升：大白从不用「说服」推高信任，靠形态与坚持——每个节点都是一次形态或权限的动作，而非一句话。
             </p>
+            <p style={{ margin: "12px 0 0" }}>
+              <Link
+                href="/track/bighero6/trust"
+                style={{ fontSize: 13.5, fontWeight: 600, textDecoration: "none" }}
+              >
+                ▶ 按信任线逐段观看这条曲线（7 段）→
+              </Link>
+            </p>
           </figure>
 
           {/* 视频（桌面在右；手机最上） */}

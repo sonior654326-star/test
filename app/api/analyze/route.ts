@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { MECHANISM_LABELS } from "@/lib/types";
+import { clientIp, dailyCap, rateLimit } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -11,6 +12,24 @@ export const maxDuration = 60;
 const MAX_FRAMES = 8;
 
 export async function POST(req: Request) {
+  // 防盗刷：每 IP 每分钟 2 次、每天 20 次；全站每天上限（额度保险丝）
+  const ip = clientIp(req);
+  if (
+    !rateLimit(`az:m:${ip}`, 2, 60_000) ||
+    !rateLimit(`az:d:${ip}`, 20, 86_400_000)
+  ) {
+    return NextResponse.json(
+      { error: "请求太频繁，请稍后再试" },
+      { status: 429 },
+    );
+  }
+  if (!dailyCap(Number(process.env.ANALYZE_DAILY_CAP || 200))) {
+    return NextResponse.json(
+      { error: "今日分析额度已用完，明天再来" },
+      { status: 429 },
+    );
+  }
+
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
